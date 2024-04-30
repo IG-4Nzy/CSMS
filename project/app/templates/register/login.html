@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Form Title</title>
+    <style media="screen">
+        body {
+            background-color: rgba(255, 255, 255, 0.07);
+        }
+
+        .bgLogin {
+            background-image: url('{% static "img/001.jpeg" %}');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+
+        .clg {
+            width: 60rem;
+            height: 40rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8 w-screen flex justify-center w-screen h-screen bgLogin ">
+    <div class=" relative flex flex-col p-4 rounded-md text-black  w-1/2 items-center justify-center ">
+
+        <div class="text-2xl font-bold mb-2 text-[#1e0e4b] text-center">Welcome back to <span
+                class="text-[#7747ff]">CSMS</span></div>
+        <div class="text-sm font-normal mb-4 text-center text-[#1e0e4b]">Log in to your account</div>
+        <form class="flex flex-col gap-3" method="post">
+            {% csrf_token %}
+            <div class="block relative">
+                <label for="username"
+                    class="block text-gray-200 cursor-text text-sm leading-[140%] font-normal mb-2">Username</label>
+                <input autocomplete="off" name="username" type="text" id="username"
+                    class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0">
+
+
+
+                <label for="password"
+                    class="block text-gray-200 cursor-text text-sm leading-[140%] font-normal mb-2">Password</label>
+                <div class="flex items-center">
+                    <input autocomplete="off" name="password" type="password" id="password"
+                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0">
+                    <!-- Button to toggle password visibility -->
+                    <button type="button" id="togglePasswordVisibility"
+                        class="ml-2 text-sm text-gray-200 focus:outline-none">Show</button>
+                </div>
+            </div>
+            <button type="submit"
+                class="bg-[#7747ff] w-max m-auto px-6 py-2 rounded text-white text-sm font-normal">Submit</button>
+
+        </form>
+        <div class="text-sm text-center mt-[1.6rem] text-gray-200">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
+                href="{% url 'StudentReg' %}">Register as a student</a></div>
+        <div class="text-sm text-center mt-[1.6rem] text-gray-200">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
+                href="{% url 'ParentReg' %}">Register as a parent</a></div>
+        <center>
+            <p class="text-red-500">{{msg}}
+            <p>
+        </center>
+    </div>
+
+    </div>
+    <div class=" w-1/2 flex items-center content-center justify-center">
+        <img class="clg" src="{% static 'img/college.jpeg' %}">
+    </div>
+</body>
+<script>
+    // Get the password input field and the button
+    var passwordField = document.getElementById("password");
+    var toggleButton = document.getElementById("togglePasswordVisibility");
+
+    // Function to toggle password visibility
+    function togglePasswordVisibility() {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleButton.textContent = "Hide";
+        } else {
+            passwordField.type = "password";
+            toggleButton.textContent = "Show";
+        }
+    }
+
+    // Event listener for the button
+    toggleButton.addEventListener("click", function () {
+        togglePasswordVisibility();
+    });
+</script>
+
+</html>

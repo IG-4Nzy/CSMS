@@ -1,0 +1,205 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyAttendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+     /* Hide the default radio button */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Style the label to look like a button */
+        label {
+            display: inline-block;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 100%;
+            height: 20px;
+            width: 20px;
+        }
+
+        /* Style the label when the associated radio button is checked */
+        #present:checked + label {
+            color: white;
+            background-color: green;
+        }
+        #absent:checked + label {
+            color: white;
+            background-color: rgb(206, 24, 0);
+        }
+</style>
+
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'PrincipalAddHod' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add HOD</li></a>
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        <a href="{% url 'PrincipalEditProfile' user_id=principal.user.id %}">
+            <img class="rounded-full w-[3rem] h-[3rem] border-red-500 border-2" src="{{ principal.principal_Profile.url }}" alt="profile">
+        </a>
+            
+            <div >
+                <p>Name :  {{principal.user.first_name}}</p><p>{{principal.user.last_name}}</p>
+                <p>Date Of Join : {{principal.principal_Doj}}</p>
+            </div>
+    </div>
+    </div>
+
+    <div class="flex">
+        <div class="navs mx-5 mt-10 w-[10rem]">
+            <ul class="flex flex-col space-y-5">
+            <a href="{% url 'PrincipalDash' %}"><li class="border-2 w-[7rem] text-center  hover:bg-gray-300 transition ease-in duration-200">Dashboard</li></a>
+            <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Hod</li></a>
+            <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
+            <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Students</li></a>
+            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty LeaveLetters</li></a>
+        </ul>
+        </div>
+    
+        <div class="options space-y-5">
+            <div class="space-x-5 flex">
+                <div class="std_class">
+                    <form id="class_month_form" method="post" action="{% url 'PrincipalAttendance' %}" class="flex gap-2">
+                        {% csrf_token %}
+                        <div class="hod_department">
+                            <select id="selected_department" class="border-2 border-black rounded-xl text-center" name="selected_department">
+                                {% for department in hod_departments %}
+                                <option value="{{ department }}" {% if selected_department == department %}selected{% endif %}>{{ department }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="Month">
+                            <select id="selected_month" class="border-2 border-black rounded-xl text-center" name="selected_month">
+                                {% for month in distinct_months %}
+                                <option value="{{ month }}" {% if selected_month == month %}selected{% endif %}>{{ month }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Month</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attendance Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for record in attendance_data %}
+                        <tr class="attendance-record" data-month="{{ record.date.month }}">
+                            <td class="px-6 py-4 whitespace-nowrap">{{ record.date }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ record.date|date:"F" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ record.attendance_faculty.user.first_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap {% if record.status == 'present' %}text-green-600{% else %}text-red-600{% endif %}">{{ record.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+    
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the page is being reloaded or accessed with URL parameters
+        var isReloaded = sessionStorage.getItem('isReloaded');
+        var urlParams = new URLSearchParams(window.location.search);
+        var selectedDepartment = urlParams.get('selected_department');
+        var selectedMonth = urlParams.get('selected_month');
+
+        if (!isReloaded && !selectedDepartment && !selectedMonth) {
+            // Set the flag to true to indicate that the page is being reloaded
+            sessionStorage.setItem('isReloaded', true);
+            // Submit the form
+            document.getElementById('class_month_form').submit();
+        }
+
+        if (selectedDepartment) {
+            document.getElementById('selected_department').value = selectedDepartment;
+        }
+
+        if (selectedMonth) {
+            document.getElementById('selected_month').value = selectedMonth;
+        }
+
+        // Function to submit the form
+        function submitForm() {
+            document.getElementById('class_month_form').submit();
+        }
+
+        // Submit the form when either select box changes
+        document.getElementById('selected_department').addEventListener('change', function() {
+            var selectedDepartment = this.value;
+            submitForm();
+        });
+
+        document.getElementById('selected_month').addEventListener('change', function() {
+            var selectedMonth = this.value;
+            submitForm();
+        });
+    });
+</script>
+</html>

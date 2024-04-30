@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: normal;
+            letter-spacing: normal;
+            background-image: url("{% static 'img/img.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+   </style>
+</head>
+<body>
+    <div class="navbar bg-white flex justify-between items-center h-14">
+        <div class="mx-5">
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div class="bg-white mx-5">
+            <ul class="flex gap-5 ">
+                {% comment %} <a href="{% url 'AdminAddHOD' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add HOD</li></a> {% endcomment %}
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a> {% endcomment %}
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                {% comment %} <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a>
+            </ul> {% endcomment %}
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+
+           
+    </div>
+<div class="flex">
+    <div class="navs mx-5 mt-4 w-[30rem] h-[screen]">
+        <ul class="flex flex-col space-y-5">
+            <div class="border-2 w-[10rem]  h-[3rem] flex items-center justify-center text-center hover:bg-gray-300 bg-gray-500 rounded-3xl "><a href="{% url 'adminpage' %}"><li >Dashboard</li></a></div>
+            <div class="border-2 w-[10rem] h-[3rem]  flex items-center justify-center text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-300 rounded-3xl  "><a href="{% url 'AdminViewHODs' %}"><li >View Hod</li></a></div>
+            {% comment %} <a href="{% url 'AdminViewFaculties' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-500 rounded-3xl">View Faculty</li></a>
+            <a href="{% url 'AdminViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-500 rounded-3xl">View Students</li></a> {% endcomment %}
+            
+            
+        </ul>
+    </div>
+   <div class="container mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for hod_instance in hod %}
+            <div class="bg-white overflow-hidden shadow-md rounded-lg">
+                <img src="{{ hod_instance.Hod_Profile.url }}" alt="{{ hod_instance.user.first_name }} Profile Picture" class="w-full h-90 object-cover object-center rounded-t-lg">
+                <div class="p-4">
+                    <p class="text-lg font-semibold">{{ hod_instance.user.first_name }} {{ hod_instance.user.last_name }}</p>
+                    <p class="text-sm text-gray-500">{{ hod_instance.Hod_Department }}</p>
+                    <div class="mt-2 flex justify-end">
+                        <a href="{% url 'removeHod' hod_instance.id %}" class="text-red-500 hover:text-red-700">Remove</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+</body>
+</html>

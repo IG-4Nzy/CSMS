@@ -1,0 +1,113 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyDash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-white font-2xl font-bold ">CSMS</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'PrincipalAddHod' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add HOD</li></a>
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        <a href="{% url 'PrincipalEditProfile' user_id=principal.user.id %}">
+            <img class="rounded-full w-[3rem] h-[3rem] border-red-500 border-2" src="{{ principal.principal_Profile.url }}" alt="profile">
+        </a>
+            
+        <div>
+            <p>Name :  {{principal.user.first_name}}</p><p>{{principal.user.last_name}}</p>
+            <p>Date Of Join : {{principal.principal_Doj}}</p>
+        </div>
+    </div>
+<div class="flex">
+    <div class="navs mx-5 mt-4 w-[20rem] h-[screen]">
+        <ul class="flex flex-col space-y-5">
+            <a href="{% url 'PrincipalDash' %}"><li class="border-2 w-[7rem] text-center ">Dashboard</li></a>
+            <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-300 ">View Hod</li></a>
+            <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
+            <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Students</li></a>
+            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty LeaveLetters</li></a>
+            
+            
+        </ul>
+    </div>
+    <div class="container mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for hod_instance in hod %}
+                <div class="bg-white overflow-hidden shadow-md rounded-lg">
+                    <img src="{{ hod_instance.Hod_Profile.url }}" alt="{{ hod_instance.user.first_name }} Profile Picture" class="w-full h-90 object-cover object-center">
+                    <div class="p-4">
+                        <p class="text-lg font-semibold">{{ hod_instance.user.first_name }} {{ hod_instance.user.last_name }}</p>
+                        <p class="text-sm text-gray-500">{{ hod_instance.Hod_Department.department_name }}</p>
+                        <p class="text-sm text-gray-500">Date Of Join :{{ hod_instance.Hod_Doj }}</p>
+                        <a class="text-sm text-red-500" href="{% url 'PrincipalRemoveHod' id=hod_instance.id %}">Remove</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

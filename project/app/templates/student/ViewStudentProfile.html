@@ -1,0 +1,140 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyDash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+       .marks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .mark-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'FacultyStudents' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">BACK</li></a>
+                <a href="{% url 'studentDash' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+    <div class="flex">
+<div class="flex flex-col w-[20rem]">
+    <div class="profile w-[20rem] flex space-x-5 items-center mx-5 mt-5">
+            <a href="{% url 'StudentEditProfile' id=student.id %}">
+                <img class="rounded-full w-[3rem] h-[3rem] border-red-500 border-2" src="{{ student.Student_Profile.url }}" alt="Profile Picture">
+            </a>
+            <div >
+                <p>{{student.user.first_name}}</p>
+                <p>{{student.Student_Department}}</p>
+                <p>Admsn No: {{student.AdmissionNo}}</p>
+            </div>
+    </div>
+
+
+</div>
+<div class="flex space-x-5 mt-[10rem]">
+    <div class="overflow-x-auto">
+        <table class="table-auto border-collapse border border-gray-400">
+            <thead>
+                <tr>
+                    <th class="border border-gray-400 px-4 py-2">Subject</th>
+                    <th class="border border-gray-400 px-4 py-2">Assignments </th>
+                    <th class="border border-gray-400 px-4 py-2">Assessments </th>
+                    <th class="border border-gray-400 px-4 py-2">Internal Exams </th>
+                    <th class="border border-gray-400 px-4 py-2">Attendance </th>
+                    <th class="border border-gray-400 px-4 py-2">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sem in semesters %}
+                <tr>
+                    <td colspan="10" class="bg-gray-200 border border-gray-400 px-4 py-2">Semester {{ sem.semester }}</td>
+                </tr>
+                {% for mark in internals %}
+                {% if mark.subject.sem == sem %}
+                <tr>
+                    <td class="border border-gray-400 px-4 py-2">{{ mark.subject.name }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ mark.ass1 }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ mark.ass2 }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ mark.tp1 }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ mark.ass3 }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ mark.total }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white mx-auto mt-6">
+        <img class="w-full" src="{{ student.Student_Profile.url }}" alt="Student Profile">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">{{ student.user.first_name }}</div>
+            <p class="text-gray-700 text-base">Date of Birth: {{ student.Student_Dob }}</p>
+            <p class="text-gray-700 text-base">Admission Number: {{ student.AdmissionNo }}</p>
+            <p class="text-gray-700 text-base">Department: {{ student.Student_Department }}</p>
+            <p class="text-gray-700 text-base">Phone Number: {{ student.Student_PhoneNum }}</p>
+            <p class="text-gray-700 text-base">Total Attendance Count : {{ attendance }}</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

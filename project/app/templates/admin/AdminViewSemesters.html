@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: normal;
+            letter-spacing: normal;
+            background-image: url("{% static 'img/img.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        /* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #fff;
+    font-size: 24px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #ff0000;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 200px;
+    background-color: #292929;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #f8f6f6;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a.active {
+    background-color: #1f1f1f;
+}
+
+.sidebar ul li a:hover {
+    background-color: #5c5959;
+}
+
+/* Main content styles */
+.main-content {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.filter {
+    margin-bottom: 20px;
+}
+
+.filter form {
+    display: flex;
+}
+
+.filter input[type="number"],
+.filter button {
+    padding: 10px;
+    border: 1px solid #0a0a0a;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.filter button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter button:hover {
+    background-color: #0056b3;
+}
+
+.departments h2 {
+    margin-bottom: 10px;
+}
+
+.departments ul {
+    list-style: none;
+}
+
+.departments ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.departments ul li .delete-btn {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.departments ul li .delete-btn:hover {
+    color: #cc0000;
+}
+.c:hover,.s:hover,.m:hover,.a:hover{
+    color: #00ff6a;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><span class="c">C</span><span class="s">S</span><span class="m">M</span><span class="a">A</span></h1>
+            <ul class="nav-links">
+                {% comment %} <li><a href="{% url 'AdminAddFaculty' %}">Add Faculty</a></li> {% endcomment %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                {% comment %} <li><a href="{% url 'services' %}">Services</a></li> {% endcomment %}
+                <li><a href="{% url 'about' %}">About</a></li>
+                {% comment %} <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul> {% endcomment %}
+        </div>
+    </nav>
+
+    <div class="container flex justify-start">
+        <div class="sidebar bg-black flex justify-start">
+            <ul>
+                <li><a href="{% url 'adminpage' %}" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{% url 'AdminViewHODs' %}"><i class="fas fa-user-tie"></i> View HOD</a></li>
+                {% comment %} <li><a href="{% url 'AdminViewFaculties' %}"><i class="fas fa-users"></i> View Faculty</a></li>
+                <li><a href="{% url 'AdminViewStudents' %}"><i class="fas fa-user-graduate"></i> View Students</a></li>
+            </ul> {% endcomment %}
+        </div>
+
+        <div class="main-content">
+            <div class="filter">
+                <form id="departmentForm" method="post" action="{% url 'AdminAddSemesters' %}">
+                    {% csrf_token %}
+                    <input type="number" name="semester" placeholder="Enter Semester">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            
+            <div class="departments">
+                <h2>Semesters</h2>
+                <ul>
+                    {% for semester in semesters %}
+                    <li>
+                        <span>SEM {{ semester.semester }}</span>
+                        <a href="{% url 'AdminDeleteSem' id=semester.id %}" class="delete-btn"><i class="fas fa-times"></i></a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

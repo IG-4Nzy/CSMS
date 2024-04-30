@@ -1,0 +1,167 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyAttendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+       <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+        }
+      
+        th, td {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+      
+        th {
+          background-color: #f2f2f2;
+        }
+      
+        tr:hover {
+          background-color: #f5f5f5;
+        }
+      </style>
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'FacultyDash' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        {% if faculty.Faculty_Profile %}
+        <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{{ faculty.Faculty_Profile.url }}" alt="profile">  </a>
+    {% else %}
+        <!-- Provide a placeholder or default image if no profile picture is available -->
+        <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> </a> 
+    {% endif %}
+            
+    <div >
+        <p>Name : {{faculty.user.first_name}}</p>
+        <p>Designation : {{faculty.Faculty_Designation}}</p>
+        <p>Date Of Join : {{faculty.Faculty_Doj}}</p>
+    </div>
+    </div>
+
+
+    <div class="navs mx-5 mt-10 flex space-x-[4.3rem]">
+        <ul class="flex flex-col space-y-5">
+            <a href="{% url 'FacultyDash' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200">Dashboard</li></a>
+            <a href="{% url 'FacultyAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  ">Attendance</li></a>
+            <a href="{% url 'FacultyStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Students</li></a>
+            <a href="{% url 'FacultyAssignments' %}"><li class="border-2 w-[7rem] text-center bg-gray-300 ">Assignments</li></a>
+            <a href="{% url 'FacultyNotes' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Notes</li></a>
+            <a href="{% url 'FacultyInternal' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Internal</li></a>
+            <a href="{% url 'FacultyViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Student LeaveLetters</li></a>
+            <a href="{% url 'FacultyLeave' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request Leave</li></a>
+        </ul>
+        
+            
+            <div class=" w-[85rem] h-[35rem] overflow-auto">
+                <div class="flex space-x-5 mt-5">
+                    <a href="{% url 'faculty_add_assignment' %}" class="border-2 border-black rounded-xl text-center w-[10rem] py-2 hover:bg-gray-300 transition ease-in duration-200">Add Assignment</a>
+                    <a href="{% url 'faculty_view_assignments' %}" class="border-2 border-black rounded-xl text-center w-[10rem] py-2 hover:bg-gray-300 transition ease-in duration-200">View Assignments</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Assignment Number</th>
+                            <th>Date of Submission</th>
+                            <th>Subject</th>
+                            <th>Assignment Question</th>
+                            <th>Date Submitted</th>
+                            <th>Answer</th>
+                            <th>Status</th>
+                            <th>PDF File</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for assignment in student_assignments %}
+                        <tr>
+                            <td>{{ assignment.student.user.first_name }} {{ assignment.student.user.last_name }}</td>
+                            <td>{{ assignment.assignment.assignment_no }}</td>
+                            <td>{{ assignment.assignment.date_of_submission }}</td>
+                            <td>{{ assignment.assignment.subject }}</td>
+                            <td>{{ assignment.assignment.assignment_question }}</td>
+                            <td>{{ assignment.date_submitted }}</td>
+                            <td>{{ assignment.answer }}</td>
+                            <td>{{ assignment.status }}</td>
+                            <td>
+                                {% if assignment.answer %}
+                                    <a href="{{ assignment.answer.url }}" download>Download PDF</a>
+                                {% else %}
+                                    No PDF available
+                                {% endif %}
+                            </td>
+                            <td class="space-x-3 flex">
+                                <a href="{% url 'approve_or_reject_assignment' assignment.id 'approve' %}" class="px-2 py-1 w-[4.5rem] h-[2rem] text-center bg-green-500 text-white rounded hover:bg-green-600">Approve</a>
+                                <a href="{% url 'approve_or_reject_assignment' assignment.id 'reject' %}" class="px-2 py-1 w-[4.5rem] h-[2rem] text-center bg-red-500 text-white rounded hover:bg-red-600">Reject</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>

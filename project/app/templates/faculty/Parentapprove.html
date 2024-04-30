@@ -1,0 +1,108 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyDash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'StdApprove' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Student Approval</li></a>
+                <a href="{% url 'ParentApprove' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Parent Approval</li></a>
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'FacultyDash' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        {% if faculty.Faculty_Profile %}
+        <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{{ faculty.Faculty_Profile.url }}" alt="profile">  </a>
+    {% else %}
+        <!-- Provide a placeholder or default image if no profile picture is available -->
+        <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> </a> 
+    {% endif %}
+            
+    <div >
+        <p>Name : {{faculty.user.first_name}}</p>
+        <p>Designation : {{faculty.Faculty_Designation}}</p>
+        <p>Date Of Join : {{faculty.Faculty_Doj}}</p>
+    </div>
+    </div>
+
+    <div class="totals flex justify-center">
+        {% for i in parent %}
+        <div class="flex flex-col items-center bg-gradient-to-br from-purple-200 to-blue-200 text-gray-800 p-4 rounded-lg shadow-md mb-4">
+            {% if i.Parent_Profile %}
+                   <img class="rounded-full w-[8rem] h-[8rem] border-red-500 border-2" src="{{ i.Parent_Profile.url }}" alt="profile">  
+                {% else %}
+                    <!-- Provide a placeholder or default image if no profile picture is available -->
+                    <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> 
+                {% endif %}
+            <h1>Parent Name :{{ i.Parent_Name }}</h1>
+            <h1>Contact Num : {{ i.Parent_num }}</h1>
+            <h1>Student's Admission Num :{{ i.AdmissionNo }}</h1>
+            <h1>Student Name {{ i.stdParent.user.first_name }}</h1>
+            {% if i.stdParent.Student_Profile %}
+                   <img class="rounded-full w-[8rem] h-[8rem] border-red-500 border-2" src="{{ i.stdParent.Student_Profile.url }}" alt="profile">  
+                {% else %}
+                    <!-- Provide a placeholder or default image if no profile picture is available -->
+                    <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> 
+                {% endif %}
+            <a href="{% url 'ParentApproval' i.id %}" class="mt-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md">Approve</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+</body>
+</html>

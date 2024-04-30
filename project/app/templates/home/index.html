@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>CSMS</title>
+    <style>
+         /* Import Constantia font */
+         @font-face {
+            font-family: 'Constantia';
+            {% comment %} src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */ {% endcomment %}
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .csma{
+            font-family: 'Constantia', sans-serif;
+        }
+
+        .phase1 {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* Ensure that content does not overflow */
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: url('{% static "img/college.jpeg" %}');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1; /* Ensure content is above the blurred background */
+        }
+
+        /* width */
+        ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: #575757;
+        width: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        background: #3b3b3b;
+        width: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        }
+
+        .events {
+            overflow-y: auto;
+        }
+       .achievementsFont{
+        font-family: 'Constantia', sans-serif;
+       }
+       .awards {
+            width: 100%; /* Set the width of the container */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+            display: flex; /* Display children in a row */
+        }
+
+        .awards > div {
+            min-width: 20rem; /* Set a minimum width for each item */
+            margin-left: 10px; /* Add spacing between items */
+        }
+    </style>
+<body>
+    <!-- page1 -->
+    <div class="phase1">
+        <div class="background-image"></div>
+        <div class="content h-full">
+            <div class="navbar flex h-16 items-center justify-between mx-6 border-b-2 border-gray-700 mx-[8rem]">
+                <div>
+                    <p class="text-[#db0445] font-bold text-3xl">CSMS.</p>
+                </div>
+                <div>
+                    <ul class="flex text-gray-700 font-bold gap-8">
+                        <a href="{% url 'login' %}"><li class="hover:text-[#db0445] transition ease-in duration-200">LOGIN</li></a>
+                        <a><li class="hover:text-[#db0445] transition ease-in duration-200">HOME</li></a>
+                        {% comment %} <a><li class="hover:text-[#db0445] transition ease-in duration-200">SERVICES</li></a> {% endcomment %}
+                        {% comment %} <a href=""><li class="hover:text-[#db0445] transition ease-in duration-200">ABOUT</li></a> {% endcomment %}
+                        {% comment %} <a><li class="hover:text-[#db0445] transition ease-in duration-200">TESTIMONIALS</li></a> {% endcomment %}
+                        {% comment %} <a><li class="hover:text-[#db0445] transition ease-in duration-200">CONTACT</li></a>  {% endcomment %}
+                    </ul>
+                </div>
+            </div>
+            <div class="w-full h-[100%] flex flex-col items-center justify-center content-center space-y-3 ">
+                <p class="text-[#db0445] font-bold text-6xl w-[90rem] text-center csma ">COLLEGE STUDENT MONITORING <br> SYSTEM</p>
+                <p class="text-[white]  text-3xl w-[60rem] text-center ">Better education in a better way</p>
+                <a class="border-2 border-[#db0445] flex rounded-3xl px-5 py-3 text-white justify-between hover:bg-[#db0445] duration-200 ease-in transition" type="button" href="#abt" ><span>About</span><span class="ml-5">>></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- page2 -->
+    <div id="abt" class="flex flex-col phase2 bg-[#1A1A1D] text-white text-center text-xl ">
+       <div > 
+        <p>About Us</p>
+        <h1>The College Student Management System (CSMS)</h1>
+        <p>The College Student Management System (CSMS) is a comprehensive software solution designed to streamline administrative tasks, enhance communication, and optimize academic management within college-level educational institutions.</p>
+        <p>The system caters to the diverse needs of administrators, faculty members, students, parents, and support staff, providing them with intuitive tools and features tailored to their roles and responsibilities.</p>
+        <p>Users can securely log in with their credentials, and role-based access control ensures that each user has appropriate permissions based on their role within the college.</p>
+        <p>Administrators have access to a suite of administrative tools for managing student admissions, faculty recruitment, course scheduling, fee collection, and other key tasks. The system facilitates data management, report generation, and decision-making processes, enabling administrators to optimize institutional operations.</p>
+        <p>Faculty members can utilize the system to create and manage course materials, record attendance, grade assignments, upload lecture notes, and communicate with students.</p>
+        <p>Students, in turn, can access course materials, submit assignments, view grades, and track their academic progress through the system.</p>
+        <p>Parents have access to a dedicated portal where they can monitor their children's academic performance, attendance, assignments, and leave requests.</p>
+        <p>Integrated communication channels, such as messaging systems, discussion forums, and email notifications, facilitate seamless communication between stakeholders. This promotes collaboration, feedback exchange, and timely resolution of issues, enhancing the overall educational experience.</p>
+        <p>The CSMS prioritizes data security and privacy, implementing robust encryption protocols, access controls, and data anonymization techniques to safeguard sensitive information. Compliance with regulatory requirements ensures the protection of user data and institutional integrity.</p>
+        <p>The system's architecture is designed for scalability and customization, allowing colleges to adapt the platform to their specific needs, preferences, and growth trajectories. Modular components enable easy integration with existing systems and future expansion, ensuring long-term viability and efficiency.</p>
+       </div>
+
+          <!-- happiness @ cptc  -->
+            <div class="mt-10 ml-10 mr-10">
+                <div class="flex items-center">
+                    
+            </div>
+        </div>
+  {% comment %} 
+        <!-- achievements -->
+        <div class="bg-[#343437] h-[16rem] flex flex-col justify-center space-y-10">
+            <p class="achievementsFont ml-5 text-4xl font-bold text-white">Achievements</p>
+            <div class="flex  awards">
+                <!-- for loop here -->
+                <div class="ml-10 w-[20rem] flex flex-col items-center ">
+                    <!-- change this dynamically  -->
+                    <p class="achievementsFont text-white text-3xl font-bold ">Best NSS Unit award</p>
+                    <p class="achievementsFont text-[#9A9999]" >Award for doing most and best social services</p>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!-- page3 -->
+<div class="max-w-[100vw] mx-auto bg-[#343437] ">
+    <p class="text-white font-bold text-2xl mb-5 ml-5">Departments</p>
+	<div id="default-carousel" class="relative" data-carousel="static">
+        <!-- Carousel wrapper -->
+        <div class="overflow-hidden relative h-56  sm:h-64 xl:h-80 2xl:h-96">
+            <!-- Item 1 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
+                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" class="w-[50rem] block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
+            </div>
+            <!-- Item 2 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" class="w-[50rem] block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
+            </div>
+            <!-- Item 3 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" class="w-[50rem] block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
+            </div>
+        </div>
+        <!-- Slider indicators
+        <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+        </div> -->
+        <!-- Slider controls -->
+        <button type="button" class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev>
+            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span class="hidden">Previous</span>
+            </span>
+        </button>
+        <button type="button" class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
+            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                <span class="hidden">Next</span>
+            </span>
+        </button>
+    </div>
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+</div>
+
+    <!-- page4 -->
+<div class="max-w-[100vw] mx-auto bg-[#343437] ">
+    <p class="text-white font-bold text-2xl mb-5 ml-5">Explore CPTC</p>
+	<div id="default-carousel" class="relative" data-carousel="static">
+        <!-- Carousel wrapper -->
+        <div class="overflow-hidden relative h-56  sm:h-64 xl:h-80 2xl:h-96">
+            <!-- Item 1 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
+                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" class="w-[50rem] block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
+            </div>
+            <!-- Item 2 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" class="w-[50rem] block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
+            </div>
+            <!-- Item 3 -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" class="w-[50rem] block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
+            </div>
+        </div>
+        <!-- Slider indicators
+        <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+        </div> -->
+        <!-- Slider controls -->
+        <button type="button" class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev>
+            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span class="hidden">Previous</span>
+            </span>
+        </button>
+        <button type="button" class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
+            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                <span class="hidden">Next</span>
+            </span>
+        </button>
+    </div>
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+</div>
+
+<!-- page5  -->
+<div class="bg-[#343437] flex gap-[20rem]">
+    <div>
+        <div class="ml-5">
+            <p class="text-3xl font-bold text-white ">Virtual Tour</p>
+            <p class="text-xl text-white border-b-[#db0445] border-b-[5px] w-[9rem]">Feel CPTC 360</p>
+        </div>
+        <div class="ml-5 mt-5">
+            <img class="h-[63rem] w-[50rem]" src="{%static 'img/cpt.jpg' %}">
+        </div>
+    </div>
+
+    <div>
+        <div class="ml-5">
+            <p class="text-3xl font-bold text-white ">Gallery</p>
+            <p class="text-xl text-white border-b-[#db0445] border-b-[5px] w-[9rem]">CPTC heaven</p>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div> {% endcomment %}
+
+
+    
+
+
+
+
+</body>
+</head>

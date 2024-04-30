@@ -1,0 +1,163 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyAttendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-white font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'HodAddFaculty' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add Faculty</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2 " src="{{hod.Hod_Profile.url}}" alt="profile" >
+        
+        <div >
+            <p>Name : {{hod.user.first_name}}</p>
+            <p>Designation : {{hod.Hod_Designation}}</p>
+            <p>Date Of Join : {{hod.Hod_Doj}}</p>
+        </div>
+</div>
+
+
+    <div class="navs mx-5 mt-10 flex space-x-[4.3rem]">
+        <ul class="flex flex-col space-y-5">
+            <a href="{% url 'HodDash' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200">Dashboard</li></a>
+            {% comment %} <a href="{% url 'HodAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  ">Attendance</li></a> {% endcomment %}
+            <a href="{% url 'HodViewFaculties' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
+            <a href="{% url 'HodStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Students</li></a>
+            <a href="{% url 'HodNotes' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  ">Notes</li></a>
+            <a href="{% url 'HodInternal' %}"><li class="border-2 w-[7rem] text-center bg-gray-300  ">Internal</li></a>
+            <a href="{% url 'HodViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">LeaveLetters</li></a>
+            {% comment %} <a href="{% url 'HodAddAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty Attendance</li></a>
+            <a href="{% url 'HodViewAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty Attendance</li></a> {% endcomment %}
+            <a href="{% url 'HodLeave' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request Leave</li></a>
+        </ul>
+        <div class="options space-y-5 ">
+            <div class="space-x-5 flex ">
+                <div class="std_class">
+                    <div class="flex">
+                    <form method="post" action="{% url 'HodInternal' %}" id="classForm">
+                        {% csrf_token %}
+                        <div class="std_class">
+                            <select class="text-black border-2 border-black rounded-xl text-center" name="classDropdown" onchange="updatePage()">
+                                <option value="1" {% if selected_class == '1' %}selected{% endif %}>First Year</option>
+                                <option value="2" {% if selected_class == '2' %}selected{% endif %}>Second Year</option>
+                                <option value="3" {% if selected_class == '3' %}selected{% endif %}>Third Year</option>
+                            </select>
+                        </div>
+                    </form>
+                    <a href="{% url 'FacultyDash' %}">Back</a>
+                </div>
+
+                    
+                    
+                    <div class="w-screen mt-5 ml-5 max-w-[120rem] overflow-x-auto">
+                        <table id="table" class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="w-1/5 md:w-1/6">First Name</th>
+                                    <th scope="col" class="w-1/5 md:w-1/6">Admission No</th>
+                                    <th scope="col" class="w-1/5 md:w-1/6">Phone Number</th>
+                                    {% for subject in subjects %}
+                                    <th scope="col" class="w-[10rem] md:w-auto">{{ subject.name }}</th>
+                                    {% endfor %}
+                                    <th scope="col" class="w-1/5 md:w-1/6">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td class="w-1/5 md:w-1/6">{{ student.user.first_name }}</td>
+                                    <td class="w-1/5 md:w-1/6">{{ student.AdmissionNo }}</td>
+                                    <td class="w-1/5 md:w-1/6">{{ student.Student_PhoneNum }}</td>
+                                    {% for internal_mark in internal_marks %}
+                                    <td class="w-[10rem] md:w-auto">{{ internal_mark.percentage|floatformat:"0" }}</td>
+                                    {% endfor %}
+                                    <td class="w-1/5 md:w-1/6">
+                                        <a href="{% url 'edit_marks' student.id %}" class="edit-link">Edit</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+        
+                    <script>
+                        $(document).ready( function () {
+                            $('#table').DataTable({
+                                "scrollX": true, // Enable horizontal scrolling
+                                "autoWidth": true, // Adjust column widths automatically
+                            });
+                        } );
+                    
+                    
+                    
+                        function updatePage() {
+                            document.getElementById("classForm").submit();
+                        }
+                    
+                    
+                    </script>
+</html>

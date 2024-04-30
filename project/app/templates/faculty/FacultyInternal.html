@@ -1,0 +1,194 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyAttendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include DataTables library -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+       .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #e2e8f0; /* Border color */
+    }
+    
+    .custom-table th,
+    .custom-table td {
+        width:500rem;
+        padding: 8px 12px;
+        text-align: center;
+        border: 1px solid #e2e8f0; /* Border color */
+    }
+    
+    .custom-table th {
+        background-color: #f3f4f6; /* Header background color */
+        font-weight: bold;
+    }
+    
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f9fafb; /* Even row background color */
+    }
+    
+    .custom-table a.edit-link {
+        padding: 6px 10px;
+        border: 1px solid #cbd5e0; /* Border color for edit links */
+        border-radius: 4px;
+        color: #4a5568; /* Text color for edit links */
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+    
+    .custom-table a.edit-link:hover {
+        background-color: #edf2f7; /* Hover background color for edit links */
+    }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'FacultyDash' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        {% if faculty.id %}
+    <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}">
+        <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% if faculty.Faculty_Profile %}{{ faculty.Faculty_Profile.url }}{% else %}{% static 'placeholder_image.jpg' %}{% endif %}" alt="profile">
+    </a>
+{% else %}
+    <!-- Handle the case where faculty.id is empty or None -->
+    <p>No profile available</p>
+{% endif %}
+            
+<div >
+    <p>Name : {{faculty.user.first_name}}</p>
+    <p>Designation : {{faculty.Faculty_Designation}}</p>
+    <p>Date Of Join : {{faculty.Faculty_Doj}}</p>
+</div>
+    </div>
+
+        <div class="options space-y-5 ">
+            <div class="space-x-5 flex ">
+                <div class="std_class">
+                    <div class="flex">
+                    <form method="post" action="{% url 'FacultyInternal' %}" id="classForm">
+                        {% csrf_token %}
+                        <div class="std_class">
+                            <select class="border-2 border-black rounded-xl text-center" name="classDropdown" onchange="updatePage()">
+                                <option class="w-[10rem] p-3 " value="1" {% if selected_class == '1' %}selected{% endif %}>SEM 1</option>
+                                <option class="w-[10rem] p-3 " value="2" {% if selected_class == '2' %}selected{% endif %}>SEM 2</option>
+                                <option class="w-[10rem] p-3 " value="3" {% if selected_class == '3' %}selected{% endif %}>SEM 3</option>
+                                <option class="w-[10rem] p-3 " value="4" {% if selected_class == '4' %}selected{% endif %}>SEM 4</option>
+                                <option class="w-[10rem] p-3 " value="5" {% if selected_class == '5' %}selected{% endif %}>SEM 5</option>
+                                <option class="w-[10rem] p-3 " value="6" {% if selected_class == '6' %}selected{% endif %}>SEM 6</option>
+                            </select>
+                        </div>
+                    </form>
+                    <a class="ml-10 border-green-500 bg-green-500 p-2 w-14 h-5 rounded-3xl text-center flex items-center hover:bg-green-200" href="{% url 'FacultyDash' %}">Back</a>
+               
+                </div>
+
+                    
+                    
+                    <div class="w-screen mt-5 ml-5 max-w-[120rem] overflow-x-auto">
+                        <table id="table" class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="w-1/5 md:w-1/6">First Name</th>
+                                    <th scope="col" class="w-1/5 md:w-1/6">Admission No</th>
+                                    <th scope="col" class="w-1/5 md:w-1/6">Phone Number</th>
+                                    {% for subject in subjects %}
+                                    <th scope="col" class="w-[10rem] md:w-auto">{{ subject.name }}</th>
+                                    {% endfor %}
+                                    <th scope="col" class="w-1/5 md:w-1/6">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td class="w-1/5 md:w-1/6">{{ student.user.first_name }}</td>
+                                    <td class="w-1/5 md:w-1/6">{{ student.AdmissionNo }}</td>
+                                    <td class="w-1/5 md:w-1/6">{{ student.Student_PhoneNum }}</td>
+                                    {% for internal_mark in internal_marks %}
+                                        {% if internal_mark.marks_std == student %}
+                                            <td class="w-[10rem] md:w-auto">{{ internal_mark.percentage|floatformat:"0" }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <td class="w-1/5 md:w-1/6">
+                                        <a href="{% url 'edit_marks' student.id %}" class="edit-link">Edit</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+</body>
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable({
+            "scrollX": true, // Enable horizontal scrolling
+            "autoWidth": true, // Adjust column widths automatically
+        });
+    } );
+
+
+
+    function updatePage() {
+        document.getElementById("classForm").submit();
+    }
+
+
+</script>
+</html>

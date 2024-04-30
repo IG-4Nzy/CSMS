@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="file"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="file"] {
+            border: none;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        img {
+            display: block;
+            max-width: 150px;
+            height: auto;
+            margin: 10px auto;
+            border-radius: 50%;
+            border: 2px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="first_name">First Name:</label><br>
+            <input type="text" id="first_name" name="first_name" value="{{ student.user.first_name }}"><br>
+        
+            <label for="last_name">Last Name:</label><br>
+            <input type="text" id="last_name" name="last_name" value="{{ student.user.last_name }}"><br>
+        
+            <label for="Student_Dob">Date of Birth:</label><br>
+            <input type="text" id="Student_Dob" name="Student_Dob" value="{{ student.Student_Dob }}"><br>
+        
+            <label for="AdmissionNo">Admission Number:</label><br>
+            <input type="text" id="AdmissionNo" name="AdmissionNo" value="{{ student.AdmissionNo }}"><br>
+        
+            <label for="Student_PhoneNum">Phone Number:</label><br>
+            <input type="text" id="Student_PhoneNum" name="Student_PhoneNum" value="{{ student.Student_PhoneNum }}"><br>
+        
+            <label for="Student_Profile">Profile Picture:</label><br>
+            <img src="{{ student.Student_Profile.url }}" alt="Profile Picture">
+            <input type="file" id="Student_Profile" name="profile_picture"><br>
+        
+            <input type="submit" value="Update Profile">
+        </form>
+        <a href="{% url 'studentDash' %}">Back</a>
+    </div>
+</body>
+</html>

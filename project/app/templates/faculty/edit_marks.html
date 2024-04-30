@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Marks</title>
+
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .subID{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <form method="post" action="{% url 'edit_marks' student.id %}">
+            {% csrf_token %}
+            {% for subject, Imark in data %}
+            <div class="mb-3">
+                <label class="" for="sub_{{ subject.id }}">{{ subject.name }}</label>
+                <input type="hidden" value="{{ subject.id }}" name="sub_{{ subject.id }}">
+            </div>
+        
+            <div class="mb-3">
+                <label for="ass1">Assignment :</label>
+                <input type="number" id="ass1_{{ subject.id }}" name="ass1_{{ subject.id }}" class="form-control" value="{{ Imark.ass1|default_if_none:'' }}" required max="5">
+            </div>
+        
+            <div class="mb-3">
+                <label for="ass2">Assessment :</label>
+                <input type="number" id="ass2_{{ subject.id }}" name="ass2_{{ subject.id }}" class="form-control" value="{{ Imark.ass2|default_if_none:'' }}" required max="5">
+            </div>
+        
+            <div class="mb-3">
+                <label for="ass3">Attendance :</label>
+                <input type="number" id="ass3_{{ subject.id }}" name="ass3_{{ subject.id }}" class="form-control" value="{{ Imark.ass3|default_if_none:'' }}" required max="5">
+            </div>
+        
+            <div class="mb-3">
+                <label for="tp1">Internal Exam :</label>
+                <input type="number" id="tp1_{{ subject.id }}" name="tp1_{{ subject.id }}" class="form-control" value="{{ Imark.tp1|default_if_none:'' }}" required max="5">
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Update Marks</button>
+        </form>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var inputs = document.querySelectorAll('input[type="number"]');
+                inputs.forEach(function (input) {
+                    input.addEventListener('input', function () {
+                        if (this.value > 5) {
+                            this.value = 5;
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+
+</body>
+</html>

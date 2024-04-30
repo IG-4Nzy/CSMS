@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: normal;
+            letter-spacing: normal;
+            background-image: url("{% static 'img/img.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }          
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between bg-white h-14 items-center ">
+        <div class="mx-5">
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div class="mx-5">
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a> {% endcomment %}
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                {% comment %} <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a>
+            </ul> {% endcomment %}
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+            
+            <div >
+                <p>{{admin.username}}</p>
+            </div>
+    </div>
+<div class="flex">
+    <div class="navs mx-5 mt-4 w-[20rem] h-[screen]">
+        <ul class="flex flex-col space-y-5">
+            <a href="{% url 'adminpage' %}"><li class="border-2 w-[7rem] text-center bg-gray-500 rounded-3xl hover:bg-gray-300">Dashboard</li></a>
+            <a href="{% url 'AdminViewHODs' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-500 rounded-3xl ">View Hod</li></a>
+            {% comment %} <a href="{% url 'AdminViewFaculties' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 bg-gray-500 rounded-3xl ">View Faculty</li></a>
+            <a href="{% url 'AdminViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 bg-gray-300  rounded-3xl ">View Students</li></a> {% endcomment %}
+            
+            
+        </ul>
+    </div>
+    <div class="options space-y-5">
+        <div class="filter flex justify-center mb-4">
+            <form id="filter_form" method="GET" action="{% url 'AdminViewStudents' %}">
+                <select id="selected_department" name="department" onchange="submitForm()">
+                    <option value="">All Departments</option>
+                    {% for department in departments %}
+                        <option value="{{ department.id }}" {% if department == selected_department %}selected{% endif %}>{{ department }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        
+        <div class="totals flex flex-wrap justify-center p-4 space-x-10">
+            {% for student_instance in students %}
+                <div class="flex flex-col items-center max-w-xs p-4 bg-blue-50 border border-blue-200 shadow-md rounded-lg">
+                    {% if student_instance.Student_Profile %}
+                        <img src="{{ student_instance.Student_Profile.url }}" alt="{{ student_instance.user.first_name }} Profile Picture" class="rounded-full w-16 h-16 border-2 border-blue-500">
+                    {% else %}
+                        <p class="text-blue-500">No profile picture available</p>
+                    {% endif %}
+                    <p class="mt-2 text-lg font-semibold text-blue-800">{{ student_instance.user.first_name }} {{ student_instance.user.last_name }}</p>
+                    <p class="text-sm font-bold uppercase text-green-600">Department: {{ student_instance.Student_Department }}</p>
+                    <!-- Add more details as needed -->
+                    <!-- Example: -->
+                    {% comment %} <p class="mt-2 text-blue-700">Roll No: {{ student_instance.roll_no }}</p> {% endcomment %}
+                    <p class="text-blue-700">Admission No: {{ student_instance.AdmissionNo }}</p>
+                    {% comment %} <p class="text-blue-700">Year of Joining: {{ student_instance.Student_yoj }}</p> {% endcomment %}
+                    <p class="text-blue-700">Semester: {{ student_instance.Sem.semester }}</p>
+                    <p class="text-blue-700">Phone Number: {{ student_instance.Student_PhoneNum }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</body>
+<script>
+function submitForm() {
+    document.getElementById('filter_form').submit();
+}
+</script>
+</html>

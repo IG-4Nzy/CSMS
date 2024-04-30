@@ -1,0 +1,193 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hod Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'HodAddSubjects' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add Subjects</li></a>
+                <a href="{% url 'HodAddFaculty' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add Faculty</li></a>
+                
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a>
+            </ul> {% endcomment %}
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+            <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2 " src="{{hod.Hod_Profile.url}}" alt="profile" >
+            
+            <div >
+                <p>Name : {{hod.user.first_name}}</p>
+                <p>Designation : {{hod.Hod_Designation}}</p>
+                <p>Date Of Join : {{hod.Hod_Doj}}</p>
+            </div>
+    </div>
+
+    
+
+<div class="flex">
+        <div class="navs mx-5 mt-4 ">
+            <ul class="flex flex-col space-y-5 w-[10rem]">
+                <a href="{% url 'HodDash' %}">
+                    <li class="border-2 w-[7rem] text-center bg-gray-300">Dashboard</li>
+                </a>
+                <a href="{% url 'HodAttendance' %}">
+                    {% comment %} <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Attendance</li> {% endcomment %}
+                </a>
+                <a href="{% url 'HodViewFaculties' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
+                <a href="{% url 'HodStudents' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Students</li>
+                </a>
+                <a href="{% url 'HodNotes' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Notes</li>
+                </a>
+                <a href="{% url 'HodInternal' %}">
+                    {% comment %} <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Internal</li> {% endcomment %}
+                </a>
+                <a href="{% url 'HodViewLeaveletters' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">LeaveLetters</li>
+                </a>
+                {% comment %} <a href="{% url 'HodAddAttendance' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty Attendance</li>
+                </a>
+                <a href="{% url 'HodViewAttendance' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty Attendance</li>
+                </a> {% endcomment %}
+                <a href="{% url 'HodLeave' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request Leave</li>
+                </a>
+            </ul>
+        </div>
+        <div class="overflow-x-auto text-black">
+            <table class="min-w-full">
+                <thead class="bg-gray-200">
+                    <!-- Table headers -->
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for faculty in faculties %}
+                    <tr>
+                        <td class="px-4 py-3">{{ faculty }}</td>
+                        <td class="px-4 py-3">
+                            <form method="post" action="{% url 'update_role' %}" class="inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="faculty_id" value="{{ faculty.id }}">
+                                <select name="role" class="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-blue-500">
+                                    <option value="teacher" {% if faculty.role == 'teacher' %}selected{% endif %}>Teacher</option>
+                                    <option value="tutor1" {% if faculty.role == 'tutor1' %}selected{% endif %}>Tutor First Year</option>
+                                    <option value="tutor2" {% if faculty.role == 'tutor2' %}selected{% endif %}>Tutor Second Year</option>
+                                    <option value="tutor3" {% if faculty.role == 'tutor3' %}selected{% endif %}>Tutor Third Year</option>
+                                </select>
+                                <button type="submit" class="ml-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Update Role</button>
+                            </form>
+                        </td>
+                        <td class="px-4 py-3">
+                            <form method="post" action="{% url 'update_subjects' %}" class="inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="faculty_id" value="{{ faculty.id }}">
+                                
+                                <!-- Input fields for existing subjects -->
+                                {% for subject in Facultysubjects %}
+                                    {% if subject.faculty_id == faculty.id %}
+                                        <div class="flex items-center mb-1">
+                                            <input type="text" name="subjects" value="{{ subject.subject.name }}" class="border border-gray-300 rounded-md px-3 py-1 mr-2 focus:outline-none focus:border-blue-500" readonly>
+                                            <a href="{% url 'remove_subject' subject.id %}" class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Remove</a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                <!-- Input field for adding new subjects -->
+                                <div class="flex items-center">
+                                    {% comment %} <input type="text" name="subjects" placeholder="Add New Subject" class="border border-gray-300 rounded-md px-3 py-1 mr-2 focus:outline-none focus:border-blue-500"> {% endcomment %}
+                                    <select name="subjects" class="border border-gray-300 rounded-md px-3 py-1 mr-2 focus:outline-none focus:border-blue-500">
+                                        <option value="">Select an Subject</option>
+                                        {% for subject in subjects %}
+                                            <option value={{subject.id}}>{{subject.name}}(SEMESTER {{subject.sem.semester}})</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Update Subjects</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            {% if error_messages %}
+            <div class="alert alert-danger">
+              <ul>
+                {% for message in error_messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyDash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+       body{
+        background-color:rgb(255, 255, 255);
+       }
+       
+   </style>
+</head>
+<body class="bg:blue-300">
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'HodAddFaculty' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add Faculty</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2 " src="{{hod.Hod_Profile.url}}" alt="profile" >
+        
+        <div >
+            <p>Name : {{hod.user.first_name}}</p>
+            <p>Designation : {{hod.Hod_Designation}}</p>
+            <p>Date Of Join : {{hod.Hod_Doj}}</p>
+        </div>
+</div>
+
+
+    <div class="navs mx-5 mt-10 flex space-x-[4.3rem]">
+        <ul class="flex flex-col space-y-5">
+            <a href="{% url 'HodDash' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200">Dashboard</li></a>
+            <a href="{% url 'HodViewFaculties' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
+            {% comment %} <a href="{% url 'HodAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Attendance</li></a> {% endcomment %}
+            <a href="{% url 'HodStudents' %}"><li class="border-2 w-[7rem] text-center bg-gray-300 ">Students</li></a>
+            <a href="{% url 'HodNotes' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Notes</li></a>
+            <a href="{% url 'HodInternal' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Internal</li></a>
+            <a href="{% url 'HodViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty LeaveLetters</li></a>
+            {% comment %} <a href="{% url 'HodAddAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty Attendance</li></a> {% endcomment %}
+            {% comment %} <a href="{% url 'HodViewAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty Attendance</li></a> {% endcomment %}
+            <a href="{% url 'HodLeave' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request Leave</li></a>
+        </ul>
+        <div class="filter flex justify-center mb-4">
+            {%csrf_token%}
+            <form id="departmentForm" class="border border-gray-300 p-4 rounded-md" method="post" action="{% url 'HodAddSubjects' %}">
+                {%csrf_token%}
+                <input type="text" name="subjects" placeholder="Enter Subject" class="block w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 text-black">
+                <select class="text-black" name="sem" id="sem" required>
+                    <option value="">Select Sem</option>
+                    {% for sem in semesters %}
+                        <option value="{{sem.id}}">SEM {{sem.semester}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
+            </form>
+            
+        </div>
+        <div class="departments overflow-scroll h-[30rem] overflow-x-hidden text-white">
+            <h2>Subjects</h2>
+            <ul class="divide-y divide-gray-200 text-white">
+                {% for subject in subjects %}
+                <li class="py-4 text-white">
+                    <div class="flex items-center justify-between text-white">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-200 truncate">{{ subject.name }}</p>
+                            <p class="text-sm text-gray-300 truncate">SEMESTER {{ subject.sem.semester }}</p>
+                        </div>
+                        <div class="ml-4 flex-shrink-0">
+                            <a href="{% url 'HodDeleteSubjects' id=subject.id %}" class="text-red-500 hover:text-red-700">
+                                <span class="sr-only">Delete</span>
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 011.414 1.414L11.414 12l4.293 4.293a1 1 0 01-1.414 1.414L10 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 12 4.293 7.707a1 1 0 011.414-1.414L10 10.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+</body>
+</html>

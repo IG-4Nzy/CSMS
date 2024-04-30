@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+    </style>
+</head>
+<body class="h-screen w-screen flex items-center justify-center content-center">
+    <div>
+    <form class="flex flex-col items-center justify-center content-center gap-2 w-1/2" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <input class="flex text-center text-black w-[20rem] " type="text" id="firstname" name="firstname" placeholder="First name" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="lastname" name="lastname" placeholder="Last name" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="username" name="username" placeholder="Username" required>
+        <input class="flex text-center text-black w-[20rem] " type="email" id="email" name="email" placeholder="Email" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="dob" name="dob" placeholder="Date Of Birth" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="doj" name="doj" placeholder="Date Of Join" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="designation" name="designation" placeholder="Designation" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="department" name="department" placeholder="Department" required>
+        <input class="flex text-center text-black w-[20rem] " type="text" id="pnum" name="pnum" placeholder="Phone number" required>
+        <!-- Password input field -->
+<input class="flex text-center text-black w-[20rem]" type="password" id="pass" name="pass" placeholder="Password" required>
+
+<!-- Button to toggle password visibility -->
+<button type="button" id="togglePassVisibility">Show Password</button>
+
+<!-- Confirm password input field -->
+<input class="flex text-center text-black w-[20rem]" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
+        <input class="flex text-center text-white w-[20rem] " type="file" id="profile" name="profile" placeholder="Profile" required>
+        <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-24 text-black" type="submit" value="Submit">
+        <a class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-24 text-black" href="{% url 'adminpage' %}">Back</a>
+    </form>
+   <p class="items-center justify-center content-center flex text-red-500 mt-5"> {{msg}}<p>
+   </div>
+        <div class="w-1/2 flex items-center justify-center content-center items-center p-5 mr-24 flex-col">
+            <img class="w-full" src="{% static 'img/hod.jpg' %}">
+            <a href="{% url 'adminpage' %}" class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-1/2 mt-10 ">Back</a>
+        </div>
+    <script>
+        // Get the password input fields and the button
+var passField = document.getElementById("pass");
+var pass2Field = document.getElementById("pass2");
+var toggleButton = document.getElementById("togglePassVisibility");
+
+// Function to toggle password visibility
+function togglePasswordVisibility() {
+    if (passField.type === "password") {
+        passField.type = "text";
+        pass2Field.type = "text";
+        toggleButton.textContent = "Hide Password";
+    } else {
+        passField.type = "password";
+        pass2Field.type = "password";
+        toggleButton.textContent = "Show Password";
+    }
+}
+
+// Event listener for the button
+toggleButton.addEventListener("click", function() {
+    togglePasswordVisibility();
+});
+        function validateForm() {
+            var firstname = document.getElementById('firstname').value.trim();
+            var lastname = document.getElementById('lastname').value.trim();
+            var username = document.getElementById('username').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var dob = document.getElementById('dob').value.trim();
+            var designation = document.getElementById('designation').value.trim();
+            var department = document.getElementById('department').value.trim();
+            var pnum = document.getElementById('pnum').value.trim();
+            var pass = document.getElementById('pass').value;
+            var pass2 = document.getElementById('pass2').value;
+            var profile = document.getElementById('profile').value;
+
+            // Email validation
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Invalid email address");
+                return false;
+            }
+
+            // Phone number validation
+            var phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(pnum)) {
+                alert("Invalid phone number. Please enter 10 digits without spaces or special characters");
+                return false;
+            }
+
+            // Password validation
+            var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            if (!passwordRegex.test(pass)) {
+                alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
+                return false;
+            }
+            if (pass !== pass2) {
+                alert("Passwords do not match");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

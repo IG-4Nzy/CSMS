@@ -1,0 +1,185 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyAttendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Import Constantia font */
+        @font-face {
+           font-family: 'Constantia';
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           font-weight: normal;
+           font-style: normal;
+       }
+
+       .content {
+           position: relative;
+           z-index: 1; /* Ensure content is above the blurred background */
+       }
+
+       /* width */
+       ::-webkit-scrollbar {
+       width: 5px;
+       height: 5px;
+       }
+
+       /* Track */
+       ::-webkit-scrollbar-track {
+       background: #575757;
+       width: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+       background: #3b3b3b;
+       width: 10px;
+       }
+
+       /* Handle on hover */
+       ::-webkit-scrollbar-thumb:hover {
+       background: #555;
+       }
+     /* Hide the default radio button */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Style the label to look like a button */
+        label {
+            display: inline-block;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 100%;
+            height: 20px;
+            width: 20px;
+        }
+
+        /* Style the label when the associated radio button is checked */
+        #present:checked + label {
+            color: white;
+            background-color: green;
+        }
+        #absent:checked + label {
+            color: white;
+            background-color: rgb(206, 24, 0);
+        }
+</style>
+
+   </style>
+</head>
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'HodAddFaculty' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">Add Faculty</li></a>
+                <a href="{% url 'HodViewFaculties' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">View Faculty</li></a>
+                <a href="{% url 'home' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li></a>
+                <a href="{% url 'about' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li></a>
+                <a href="{% url 'testimonials' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li></a>
+                <a href="{% url 'contact' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li></a>
+            </ul> {% endcomment %}
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2 " src="{{hod.Hod_Profile.url}}" alt="profile" >
+        
+        <div >
+            <p>Name : {{hod.user.first_name}}</p>
+            <p>Designation : {{hod.Hod_Designation}}</p>
+            <p>Date Of Join : {{hod.Hod_Doj}}</p>
+        </div>
+</div>
+
+    <div class="flex">
+        <div class="navs mx-5 mt-10 w-[10rem]">
+            <ul class="flex flex-col space-y-5">
+                <a href="{% url 'HodDash' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200">Dashboard</li></a>
+                <a href="{% url 'HodAttendance' %}"><li class="border-2 w-[7rem] text-center bg-gray-300  ">Attendance</li></a>
+                <a href="{% url 'HodStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Students</li></a>
+                <a href="{% url 'HodNotes' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Notes</li></a>
+                {% comment %} <a href="{% url 'HodInternal' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Internal</li></a> {% endcomment %}
+                <a href="{% url 'HodViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">LeaveLetters</li></a>
+                {% comment %} <a href="{% url 'HodAddAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty Attendance</li></a>
+                <a href="{% url 'HodViewAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty Attendance</li></a> {% endcomment %}
+                <a href="{% url 'HodLeave' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request Leave</li></a>
+            </ul>
+        </div>
+    
+       
+        <div class="options space-y-5">
+            <div class="options space-y-5">
+                <div class="space-x-5 flex">
+                    <div class="std_class">
+                        <form id="class_month_form" method="get" action="{% url 'HodAttendance' %}" class="flex gap-2">
+                            {% csrf_token %}
+                            <div class="std_class">
+                                <select class="text-black" id="selected_class" class="border-2 border-black rounded-xl text-center" name="selected_class">
+                                    <option class="text-black" value="1" {% if selected_class == '1' %}selected{% endif %}>First Year</option>
+                                    <option value="2" {% if selected_class == '2' %}selected{% endif %}>Second Year</option>
+                                    <option value="3" {% if selected_class == '3' %}selected{% endif %}>Third Year</option>
+                                </select>
+                            </div>
+                            <button type="submit">Filter</button> <!-- Hidden submit button for JavaScript submission -->
+                        </form>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Name</th>
+                                <!-- Loop through dates and display them horizontally -->
+                                {% for date in dates %}
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ date }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Loop through students -->
+                            {% for student_attendance in attendance_data %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-black">{{ student_attendance.student.user.first_name }} {{ student_attendance.student.user.last_name }}</td>
+                                    <!-- Loop through dates for each student -->
+                                    {% for attendance in student_attendance.attendance %}
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {% if attendance %}
+                                                {% if attendance.status == 'present' %}
+                                                    <span class="text-green-600">Present</span>
+                                                {% else %}
+                                                    <span class="text-red-600">Absent</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-gray-400">-</span>
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+</body>
+
+
+</html>

@@ -1,0 +1,222 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacultyAttendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Import Constantia font */
+        @font-face {
+            font-family: 'Constantia';
+            src: url('{% static ' F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff');
+            /* Adjust the path and format as needed */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            /* Ensure content is above the blurred background */
+        }
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #575757;
+            width: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #3b3b3b;
+            width: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Hide the default radio button */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Style the label to look like a button */
+        label {
+            display: inline-block;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 100%;
+            height: 20px;
+            width: 20px;
+        }
+
+        /* Style the label when the associated radio button is checked */
+        #present:checked+label {
+            color: white;
+            background-color: green;
+        }
+
+        #absent:checked+label {
+            color: white;
+            background-color: rgb(206, 24, 0);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background-color: #f2f2f2;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+    </style>
+
+    </style>
+</head>
+
+<body>
+    <div class="navbar flex justify-between mx-5 mt-5">
+        <div>
+            <p class="text-black font-2xl font-bold ">CSMA</p>
+        </div>
+        <div>
+            <ul class="flex gap-5 ">
+                <a href="{% url 'logout' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">logout</li></a>
+                <a href="{% url 'FacultyDash' %}"><li class="hover:text-red-300 transition ease-in duration-200 ">HOME</li></a>
+                {% comment %} <a href="{% url 'services' %}">
+                    <li class="hover:text-red-300 transition ease-in duration-200 ">SERVICES</li>
+                </a>
+                <a href="{% url 'about' %}">
+                    <li class="hover:text-red-300 transition ease-in duration-200 ">ABOUT</li>
+                </a>
+                <a href="{% url 'testimonials' %}">
+                    <li class="hover:text-red-300 transition ease-in duration-200 ">TESTIMONIALS</li>
+                </a>
+                <a href="{% url 'contact' %}">
+                    <li class="hover:text-red-300 transition ease-in duration-200 ">CONTACT</li>
+                </a> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile flex space-x-5 items-center mx-5 mt-5">
+        {% if faculty.Faculty_Profile %}
+        <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{{ faculty.Faculty_Profile.url }}" alt="profile">  </a>
+    {% else %}
+        <!-- Provide a placeholder or default image if no profile picture is available -->
+        <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> </a> 
+    {% endif %}
+            
+    <div >
+        <p>Name : {{faculty.user.first_name}}</p>
+        <p>Designation : {{faculty.Faculty_Designation}}</p>
+        <p>Date Of Join : {{faculty.Faculty_Doj}}</p>
+    </div>
+    </div>
+
+    <div class="flex">
+        <div class="navs mx-5 mt-10 w-[10rem]">
+            <ul class="flex flex-col space-y-5">
+                <a href="{% url 'FacultyDash' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200">
+                        Dashboard</li>
+                </a>
+                <a href="{% url 'FacultyAttendance' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Attendance</li>
+                </a>
+                <a href="{% url 'FacultyViewAttendance' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Attendance</li></a>
+                <a href="{% url 'FacultyStudents' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">
+                        Students</li>
+                </a>
+                <a href="{% url 'FacultyAssignments' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">
+                        Assignments</li>
+                </a>
+                <a href="{% url 'FacultyNotes' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Notes
+                    </li>
+                </a>
+                <a href="{% url 'FacultyInternal' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">
+                        Internal</li>
+                </a>
+                
+                <a href="{% url 'FacultyViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center bg-gray-300   ">Student LeaveLetters</li></a>
+                <a href="{% url 'FacultyLeave' %}">
+                    <li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request
+                        Leave</li>
+                </a>
+            </ul>
+        </div>
+        <div class="options mt-10 space-y-5">
+        </div>
+        <div class="options space-y-5 flex flex-wrap justify-between text-black">
+            {% for leave_letter in student_leave_letters %}
+            <div class="bg-white rounded-lg shadow-md p-6 space-y-4 mb-4 mr-4" style="flex: 0 0 30%;">
+                <!-- Leave Details -->
+                <div>
+                    <h3 class="text-lg font-semibold">Leave Details</h3>
+                    <p><span class="font-semibold">Reason:</span> {{ leave_letter.reason }}</p>
+                    <p><span class="font-semibold">Date:</span> {{ leave_letter.date }}</p>
+                    <p><span class="font-semibold">Approval Status:</span> {% if leave_letter.isApproved %}Approved{% else %}Not Approved{% endif %}</p>
+                </div>
+                <!-- Student Information -->
+                <div>
+                    <h3 class="text-lg font-semibold">Student Information</h3>
+                    <p><span class="font-semibold">Name:</span> {{ leave_letter.leave_Student.user.first_name }} {{ leave_letter.leave_Student.user.last_name }}</p>
+                    <p><span class="font-semibold">Semester:</span> {{ leave_letter.leave_Student.Sem.semester }}</p>
+                    <p><span class="font-semibold">Department:</span> {{ leave_letter.leave_Student.Student_Department }}</p>
+                    <p><span class="font-semibold">Parent Name:</span> {{ leave_letter.leave_Parent.user.first_name }}</p>
+                    <p><span class="font-semibold">Admission Number:</span> {{ leave_letter.leave_Student.AdmissionNo }}</p>
+                </div>
+                <!-- Buttons for Reject and Approve -->
+                <div class="flex justify-end space-x-4">
+                    <form action="{% url 'approve_reject_leaveFaculty' leave_letter.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="status" value="approve" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Approve</button>
+                    </form>
+                    <form action="{% url 'approve_reject_leaveFaculty' leave_letter.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="status" value="reject" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Reject</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+</body>
+
+
+</html>
