@@ -77,7 +77,7 @@
         </a>
             
         <div>
-            <p>Name :  {{principal.user.first_name}}</p><p>{{principal.user.last_name}}</p>
+            <p>Name :  {{principal.user.username}}</p><p>{{principal.user.last_name}}</p>
             <p>Date Of Join : {{principal.principal_Doj}}</p>
         </div>
     </div>
@@ -88,7 +88,7 @@
             <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-300 ">View Hod</li></a>
             <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
             <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Students</li></a>
-            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty LeaveLetters</li></a>
+            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">LeaveLetters</li></a>
             
             
         </ul>
@@ -96,12 +96,11 @@
     <div class="container mx-auto">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {% for hod_instance in hod %}
-                <div class="bg-white overflow-hidden shadow-md rounded-lg">
+                <div class="bg-white overflow-hidden shadow-md rounded-lg text-black">
                     <img src="{{ hod_instance.Hod_Profile.url }}" alt="{{ hod_instance.user.first_name }} Profile Picture" class="w-full h-90 object-cover object-center">
                     <div class="p-4">
                         <p class="text-lg font-semibold">{{ hod_instance.user.first_name }} {{ hod_instance.user.last_name }}</p>
                         <p class="text-sm text-gray-500">{{ hod_instance.Hod_Department.department_name }}</p>
-                        <p class="text-sm text-gray-500">Date Of Join :{{ hod_instance.Hod_Doj }}</p>
                         <a class="text-sm text-red-500" href="{% url 'PrincipalRemoveHod' id=hod_instance.id %}">Remove</a>
                     </div>
                 </div>

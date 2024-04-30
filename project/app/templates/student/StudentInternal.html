@@ -88,9 +88,6 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 text-left name-column">Name</th>
-                            <th class="px-6 py-3 text-left admission-column">Admission No</th>
-                            <th class="px-6 py-3 text-left phone-column">Phone Number</th>
                             {% for subject in subjects %}
                             <th class="px-6 py-3 text-left mark-column">{{ subject }}</th>
                             {% endfor %}
@@ -98,9 +95,6 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ student.user.first_name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ student.AdmissionNo }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ student.Student_PhoneNum }}</td>
                             {% for internal_mark in internal_marks %}
                             <td class="px-6 py-4 whitespace-nowrap">{{ internal_mark.percentage|floatformat:"0" }}</td>
                             {% endfor %}

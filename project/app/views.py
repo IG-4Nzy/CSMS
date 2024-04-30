@@ -379,7 +379,7 @@ def PrincipalAddHod(request):
         password2 = request.POST.get('pass2')
         email = request.POST.get('email')
         Hod_Dob = request.POST.get('dob')
-        Hod_Doj = request.POST.get('doj')
+        # Hod_Doj = request.POST.get('doj')
         Hod_Designation = request.POST.get('Designation')
         Hod_Department = request.POST.get('Department')
         Hod_PhoneNUm = request.POST.get('pnum')
@@ -393,7 +393,7 @@ def PrincipalAddHod(request):
             'password2':password2,
             'email':email,
             'Hod_Dob':Hod_Dob,
-            'Hod_Doj':Hod_Doj,
+            # 'Hod_Doj':Hod_Doj,
             'Hod_Designation':Hod_Designation,
             'Hod_Department':Hod_Department,
             'Hod_PhoneNUm':Hod_PhoneNUm,
@@ -444,7 +444,7 @@ def PrincipalAddHod(request):
         # All validations pass, create Hod
         department = Departments.objects.get(pk=Hod_Department)
         user = User.objects.create_user(username=username, password=password, email=email, first_name=firstname, last_name=lastname)
-        Hod.objects.create(user=user, Hod_Dob=Hod_Dob, Hod_Doj=Hod_Doj, Hod_Department=department, Hod_Designation=Hod_Designation, Hod_PhoneNUm=Hod_PhoneNUm, Hod_Profile=Hod_Profile)
+        Hod.objects.create(user=user, Hod_Dob=Hod_Dob, Hod_Department=department, Hod_Designation=Hod_Designation, Hod_PhoneNUm=Hod_PhoneNUm, Hod_Profile=Hod_Profile)
         return HttpResponseRedirect(reverse('PrincipalAddHod') + '?success=1')
 
     return render(request, 'Principal/principalAddUser.html', context)
@@ -807,14 +807,14 @@ def HodAddFaculty(request):
 
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
-        lastname = request.POST.get('Lastname')
+        lastname = request.POST.get('lastname')
         username = request.POST.get('username')
         password = request.POST.get('pass')
         password2 = request.POST.get('pass2')
         email = request.POST.get('email')
         Faculty_Dob = request.POST.get('dob')
         Faculty_Doj = request.POST.get('doj')
-        Faculty_Designation = request.POST.get('Designation')
+        Faculty_Designation = request.POST.get('designation')
         Faculty_Department = hod.Hod_Department
         Faculty_PhoneNUm = request.POST.get('pnum')
         Faculty_Profile = request.FILES.get('profile')
@@ -1569,14 +1569,14 @@ def StudentReg(request):
     departments = Departments.objects.all()
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
-        lastname = request.POST.get('Lastname')
+        lastname = request.POST.get('lastname')
         username = request.POST.get('username')
         password = request.POST.get('pass')
         password2 = request.POST.get('pass2')
         email = request.POST.get('email')
         Student_Dob = request.POST.get('dob')
         Student_Doj = date.today()
-        Department = request.POST.get('Department')
+        Department = request.POST.get('department')
         Student_PhoneNUm = request.POST.get('pnum')
         Student_Profile = request.FILES.get('profile')
 

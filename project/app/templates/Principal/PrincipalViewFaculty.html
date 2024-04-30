@@ -76,7 +76,7 @@
         </a>
             
         <div>
-            <p>Name :  {{principal.user.first_name}}</p><p>{{principal.user.last_name}}</p>
+            <p>Name :  {{principal.user.usename}}</p><p>{{principal.user.last_name}}</p>
             <p>Date Of Join : {{principal.principal_Doj}}</p>
         </div>
     </div>
@@ -87,7 +87,7 @@
             <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200   ">View Hod</li></a>
             <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 bg-gray-300">View Faculty</li></a>
             <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Students</li></a>
-            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Faculty LeaveLetters</li></a>
+            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">LeaveLetters</li></a>
             
             
         </ul>

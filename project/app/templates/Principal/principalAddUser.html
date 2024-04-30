@@ -8,11 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
-            color: white;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+             background-image: url('{% static "img/001.jpeg" %}');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
     </style>
 </head>
@@ -26,39 +25,63 @@
             {% if msg %}
                 <div class="error bg-red-500 text-white px-4 py-2 rounded" id="errorMsg">{{ msg }}</div>
             {% endif %}
-            <input class="text-black" type="text" name="firstname" id="firstname" placeholder="First name" required>
-            <input class="text-black" type="text" name="Lastname" id="lastname" placeholder="Last name" required>
-            <input class="text-black" type="text" name="username" id="username" placeholder="Username" required>
-            <input class="text-black" type="email" name="email" id="email" placeholder="Email" required>
-            
-            <div>
-                <label>Date Of Birth</label><br>
-                <input class="text-black" type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
-            </div>
-            <div>
-                <label>Date Of Joining</label><br>
-                <input class="text-black" type="date" name="doj" id="doj" placeholder="Date Of Join" required>
-            </div>
-            <input class="text-black" type="text" name="Designation" id="designation" placeholder="Designation" required>
-            <select  class="text-black" name="Department" id="department" required>
-                <option class="text-black" value="">Select Department</option>
+<div class="max-w-md mx-auto">
+        <div>
+            <label for="firstname" class="block text-gray-300">First Name:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="First name" required>
+        </div>
+        <div>
+            <label for="lastname" class="block text-gray-300">Last Name:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="Lastname" id="lastname" placeholder="Last name" required>
+        </div>
+        <div>
+            <label for="username" class="block text-gray-300">Username:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="username" id="username" placeholder="Username" required>
+        </div>
+        <div>
+            <label for="email" class="block text-gray-300">Email:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="email" name="email" id="email" placeholder="Email" required>
+        </div>
+        <div>
+            <label for="dob" class="block text-gray-300">Date Of Birth:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
+        </div>
+        <div>
+            <label for="designation" class="block text-gray-300">Designation:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="Designation" id="designation" placeholder="Designation" required>
+        </div>
+        <div>
+            <label for="department" class="block text-gray-300">Department:</label>
+            <select class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" name="Department" id="department" required>
+                <option value="">Select Department</option>
                 {% for department in departments %}
                     <option value="{{department.id}}">{{department.department_name}}</option>
                 {% endfor %}
             </select>
-            <input class="text-black" type="number" name="pnum" id="pnum" placeholder="Phone number" required>
-            <!-- Password input field -->
-            <input class="flex text-center text-black w-[20rem]" type="password" id="pass" name="pass" placeholder="Password" required>
-        
-            <!-- Button to toggle password visibility -->
-            <button type="button" id="togglePassVisibility" onclick="togglePasswordVisibility()">Show Password</button>
-        
-            <!-- Confirm password input field -->
-            <input class="flex text-center text-black w-[20rem]" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
-        
-            <input class="text-white" type="file" name="profile" id="profile" placeholder="Profile" required>
-            <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center" type="submit" value="Submit">
-            <a href="{% url 'PrincipalDash' %}" class="bg-gray-500 rounded-3xl flex text-center justify-center content-center items-center">Back</a>
+        </div>
+        <div>
+            <label for="pnum" class="block text-gray-300">Phone Number:</label>
+            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="number" name="pnum" id="pnum" placeholder="Phone number" required>
+        </div>
+        <div>
+            <label for="pass" class="block text-gray-300">Password:</label>
+            <input class="flex text-center text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="password" id="pass" name="pass" placeholder="Password" required>
+        </div>
+        <div>
+            <label for="pass2" class="block text-gray-300">Confirm Password:</label>
+            <input class="flex text-center text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
+        </div>
+        <div>
+            <label for="profile" class="block text-gray-300">Profile Picture:</label>
+            <input class="text-white border border-gray-300 rounded-md py-2 px-4 block w-full" type="file" name="profile" id="profile" placeholder="Profile" required>
+        </div>
+        <div>
+            <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center py-2 px-4 block w-full text-black mt-5" type="submit" value="Submit">
+        </div>
+        <div>
+            <a href="{% url 'PrincipalDash' %}" class="bg-gray-500 rounded-3xl flex text-center justify-center content-center items-center py-2 px-4 block w-full text-black mt-5">Back</a>
+        </div>
+</div>
         </form>
         
     </div>
@@ -66,111 +89,104 @@
         <img class="w-full" src="{% static "img/hod.jpg" %}">
     </div>
     
-</body>
 <script>
-    // Get the password input fields and the button
+    // Function to toggle password visibility
+    function togglePasswordVisibility() {
+        var passField = document.getElementById("pass");
+        var pass2Field = document.getElementById("pass2");
+        var toggleButton = document.getElementById("togglePassVisibility");
 
-
-// Function to toggle password visibility
-function togglePasswordVisibility() {
-    var passField = document.getElementById("pass");
-var pass2Field = document.getElementById("pass2");
-var toggleButton = document.getElementById("togglePassVisibility");
-
-    if (passField.type === "password") {
-        passField.type = "text";
-        pass2Field.type = "text";
-        toggleButton.textContent = "Hide Password";
-    } else {
-        passField.type = "password";
-        pass2Field.type = "password";
-        toggleButton.textContent = "Show Password";
-    }
-}
-
-// Event listener for the button
-toggleButton.addEventListener("click", function() {
-    togglePasswordVisibility();
-});
-
-
-function validateForm() {
-    var firstname = document.getElementById('firstname').value;
-    var lastname = document.getElementById('lastname').value;
-    var username = document.getElementById('username').value;
-    var email = document.getElementById('email').value;
-    var dob = document.getElementById('dob').value;
-    var doj = document.getElementById('doj').value;
-    var designation = document.getElementById('designation').value;
-    var department = document.getElementById('department').value;
-    var pnum = document.getElementById('pnum').value;
-    var pass = document.getElementById('pass').value;
-    var pass2 = document.getElementById('pass2').value;
-    var profile = document.getElementById('profile').value;
-
-    // Perform validation
-    if (firstname === '' || lastname === '' || username === '' || email === '' || dob === '' || doj === '' || designation === '' || department === '' || pnum === '' || pass === '' || pass2 === '' || profile === '') {
-        alert('Please fill in all fields');
-        return false;
+        if (passField.type === "password") {
+            passField.type = "text";
+            pass2Field.type = "text";
+            toggleButton.textContent = "Hide Password";
+        } else {
+            passField.type = "password";
+            pass2Field.type = "password";
+            toggleButton.textContent = "Show Password";
+        }
     }
 
-    // Password validation
-    if (pass !== pass2) {
-        alert('Passwords do not match');
-        return false;
+    // Event listener for the button
+    document.addEventListener('DOMContentLoaded', function() {
+        var toggleButton = document.getElementById("togglePassVisibility");
+        toggleButton.addEventListener("click", function() {
+            togglePasswordVisibility();
+        });
+    });
+
+    // Function to validate form
+    function validateForm() {
+        var firstname = document.getElementById('firstname').value;
+        var lastname = document.getElementById('lastname').value;
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var dob = document.getElementById('dob').value;
+        var designation = document.getElementById('designation').value;
+        var department = document.getElementById('department').value;
+        var pnum = document.getElementById('pnum').value;
+        var pass = document.getElementById('pass').value;
+        var pass2 = document.getElementById('pass2').value;
+        var profile = document.getElementById('profile').value;
+
+        // Perform validation
+        if (firstname === '' || lastname === '' || username === '' || email === '' || dob === '' || designation === '' || department === '' || pnum === '' || pass === '' || pass2 === '' || profile === '') {
+            alert('Please fill in all fields');
+            return false;
+        }
+
+        // Password validation
+        if (pass !== pass2) {
+            alert('Passwords do not match');
+            return false;
+        }
+
+        if (pnum.length < 10) {
+            alert('Phonenumber not valid');
+            return false;
+        }
+
+        // Check password strength (at least 8 characters including uppercase, lowercase, and digits)
+        var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+        if (!strongRegex.test(pass)) {
+            alert('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit');
+            return false;
+        }
+
+        // Check age (above 18)
+        var dobDate = new Date(dob);
+        var todayDate = new Date();
+        var age = todayDate.getFullYear() - dobDate.getFullYear();
+        var monthDiff = todayDate.getMonth() - dobDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && todayDate.getDate() < dobDate.getDate())) {
+            age--;
+        }
+        if (age < 18) {
+            alert('You must be at least 18 years old to register');
+            return false;
+        }
+
+        // You can add more validations here
+
+        // If all validations pass, return true to submit the form
+        return true;
     }
 
-    if (pnum.length < 10) {
-        alert('Phonenumber not valid');
-        return false;
-    }
-    
-    // Check password strength (at least 8 characters including uppercase, lowercase, and digits)
-    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-    if (!strongRegex.test(pass)) {
-        alert('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit');
-        return false;
+    // Function to display alert message
+    function displayAlertMsg() {
+        var alertDiv = document.getElementById('alertMsg');
+        alertDiv.classList.remove('hidden');
+        setTimeout(function() {
+            alertDiv.classList.add('hidden');
+        }, 3000); // Hide the message after 3 seconds (3000 milliseconds)
     }
 
-    // Check age (above 18)
-    var dobDate = new Date(dob);
-    var todayDate = new Date();
-    var age = todayDate.getFullYear() - dobDate.getFullYear();
-    var monthDiff = todayDate.getMonth() - dobDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && todayDate.getDate() < dobDate.getDate())) {
-        age--;
+    // Check for success message in the URL query parameters
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        // Display the alert message if success parameter is present
+        displayAlertMsg();
     }
-    if (age < 18) {
-        alert('You must be at least 18 years old to register');
-        return false;
-    }
-
-    // Check if date of joining is before today
-    var dojDate = new Date(doj);
-    if (dojDate > todayDate) {
-        alert('Date of joining must be before today');
-        return false;
-    }
-
-    // You can add more validations here
-    
-    // If all validations pass, return true to submit the form
-    return true;
-}
-function displayAlertMsg() {
-    var alertDiv = document.getElementById('alertMsg');
-    alertDiv.classList.remove('hidden');
-    setTimeout(function() {
-        alertDiv.classList.add('hidden');
-    }, 3000); // Hide the message after 3 seconds (3000 milliseconds)
-}
-
-// Check for success message in the URL query parameters
-var urlParams = new URLSearchParams(window.location.search);
-if (urlParams.has('success')) {
-    // Display the alert message if success parameter is present
-    displayAlertMsg();
-}
-
 </script>
+</body>
 </html>

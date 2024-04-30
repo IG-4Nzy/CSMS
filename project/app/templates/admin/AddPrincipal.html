@@ -56,8 +56,9 @@
             <label for="principal_Profile" class="block text-gray-300">Profile Picture:</label>
             <input class="text-white w-full text-center border border-gray-300 rounded-md py-2 px-4" type="file" name="principal_Profile" id="principal_Profile" placeholder="Profile" required>
         </div>
-        <div>
-            <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-24 text-black" type="submit" value="Submit">
+        <div class="flex justify-center items-center space-x-5">
+           <div class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-[8rem] text-black h-[2rem]"> <input  type="submit" value="Submit"></div>
+           <div class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center  h-[2rem] w-[8rem] " > <a href="{% url 'adminpage' %}" >Back</a></div>
         </div>
 
 </div>
@@ -65,7 +66,7 @@
     </div>
     <div class="w-1/2 flex items-center justify-center content-center items-center p-5 mr-24 flex-col">
         <img class="w-full" src="{% static 'img/principal.jpg' %}">
-        <a href="{% url 'adminpage' %}" class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-1/2 mt-10 ">Back</a>
+        
     </div>
    
 
@@ -96,11 +97,26 @@ showPasswordCheckbox.addEventListener("change", function() {
 });
 
 function validateForm() {
+    var name = document.getElementById("name").value.trim();
+    var username = document.getElementById("username").value.trim();
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("cpassword").value;
     var email = document.getElementById("email").value;
     var dob = document.getElementById("principalDOB").value;
     var phoneNum = document.getElementById("principal_PhoneNUm").value;
+
+     var nameRegex = /^[a-zA-Z\s]+$/;
+    if (!nameRegex.test(name)) {
+        alert("Name should only contain letters and spaces.");
+        return false;
+    }
+
+    // Username validation
+    var usernameRegex = /^[a-zA-Z]+$/;
+    if (!usernameRegex.test(username)) {
+        alert("Username should only contain letters.");
+        return false;
+    }
 
     // Password strength check
     var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
