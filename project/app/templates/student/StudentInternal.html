@@ -24,25 +24,24 @@
        /* width */
        ::-webkit-scrollbar {
        width: 5px;
-       height: 5px;
+       height: 20px;
        }
 
-       /* Track */
        ::-webkit-scrollbar-track {
-       background: #575757;
-       width: 10px;
+       background: #0a0a0a;
+       width: 5px;
        }
 
        /* Handle */
        ::-webkit-scrollbar-thumb {
-       background: #3b3b3b;
-       width: 10px;
+       background: #757575;
+       width: 5px;
        }
 
        /* Handle on hover */
        ::-webkit-scrollbar-thumb:hover {
-       background: #555;
-       }
+       background: #272727;
+       } 
    </style>
 </head>
 <body>
@@ -85,22 +84,47 @@
         </ul>
         <div class="options space-y-5">
             <div class="w-screen mt-5 ml-5 max-w-[120rem] overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead>
-                        <tr>
-                            {% for subject in subjects %}
-                            <th class="px-6 py-3 text-left mark-column">{{ subject }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            {% for internal_mark in internal_marks %}
-                            <td class="px-6 py-4 whitespace-nowrap">{{ internal_mark.percentage|floatformat:"0" }}</td>
-                            {% endfor %}
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+    <div class="overflow-x-auto">
+    <div class="flex items-center justify-between mb-4">
+       <form id="semesterForm" action="{% url 'studentInternal' %}" method="POST">
+    {% csrf_token %}
+    <div class="flex items-center">
+        <label for="semester" class="mr-2">Select Semester:</label>
+        <select id="semester" name="semester" class="px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 bg-white text-gray-700" onchange="this.form.submit()">
+            {% for semester in semesters %}
+                <option value="{{ semester.id }}" {% if selected_semester.id == semester.id %}selected{% endif %}>{{ semester.semester }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
+
+<script>
+    document.getElementById("semester").addEventListener("change", function() {
+        document.getElementById("semesterForm").submit();
+    });
+</script>
+    </div>
+    <table class="min-w-full divide-y divide-gray-200 "><div style="overflow-x: auto;">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                {% for subject in subjects %}
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ subject }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+                {% for internal_mark in internal_marks %}
+                <td class="px-6 py-4 whitespace-nowrap">{{ internal_mark.percentage|floatformat:"0" }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
             </div>
         </div>
 </body>

@@ -16,6 +16,7 @@ from django.db import transaction
 import re
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
+from django.db.models import Count
 
 
 
@@ -1152,12 +1153,25 @@ def FacultyStudents(request):
     start_semester = (int(selected_class) - 1) * 2 + 1
     end_semester = start_semester + 1
     students = Student.objects.filter(
-    Q(Student_Department=faculty.Faculty_Department) &
-    Q(Sem__in=range(start_semester, end_semester + 1)) &
-    Q(Is_Active=True)
+        Q(Student_Department=faculty.Faculty_Department) &
+        Q(Sem__in=range(start_semester, end_semester + 1)) &
+        Q(Is_Active=True)
     )
+
+    # Calculate total attendance present counts and total unique date counts
+    total_attendance_counts = students.annotate(
+        total_attendance=Count('attendances', filter=Q(attendances__status='present')),
+        unique_dates=Count('attendances__date', distinct=True)
+    )
+
+    for student in total_attendance_counts:
+        student.count = student.total_attendance
+        student.dates = student.unique_dates
+        print(student.dates)
+        student.save()
+
     context = {
-        'students': students,
+        'students': total_attendance_counts,
         'faculty': faculty,
         'selected_class': selected_class,
     }
@@ -1205,7 +1219,7 @@ def delete_note(request, note_id):
     return redirect('FacultyNotes')
 def FacultyInternal(request):
     try:
-        faculty = get_object_or_404(Faculty, user=request.user)
+        faculty = Faculty.objects.get(user=request.user)
         selected_class = request.session.get('selected_class')
         semesters = Semesters.objects.all()
 
@@ -1217,17 +1231,22 @@ def FacultyInternal(request):
             selected_class = '1'
 
         Sem = Semesters.objects.get(pk=selected_class)
-   
+        students  = Student.objects.filter(Sem=Sem)
         # Filter subjects based on the selected semester
-        subjects = Subject.objects.filter(sem=Sem)
-        students = Student.objects.filter(Sem=Sem)
+        faculty_subjects = FacultySubject.objects.filter(faculty=faculty, sem=Sem)
 
+        # Extract subject IDs from the FacultySubject queryset
+        subject_ids = faculty_subjects.values_list('subject_id', flat=True)
 
+        # Filter Subject objects based on the extracted subject IDs
+        subjects = Subject.objects.filter(id__in=subject_ids)
+
+        # Filter InternalMarks objects based on faculty department and subjects
         internal_marks = InternalMarks.objects.filter(
             marks_std__Student_Department=faculty.Faculty_Department,
-            marks_std__Sem=Sem,
             subject__in=subjects
         )
+        print(internal_marks)
 
         if not internal_marks:
              for student in students:
@@ -1510,7 +1529,14 @@ def facultyAssignments(request):
 def edit_marks(request, student_id):
     student = get_object_or_404(Student, id=student_id)
     faculty = get_object_or_404(Faculty, user=request.user)
-    Psubjects = Subject.objects.filter(sem=student.Sem.semester)
+    # Psubjects = Subject.objects.filter(sem=student.Sem.semester)
+    faculty_subjects = FacultySubject.objects.filter(faculty=faculty, sem=student.Sem)
+
+    # Extract subject IDs from the FacultySubject queryset
+    subject_ids = faculty_subjects.values_list('subject_id', flat=True)
+
+    # Filter Subject objects based on the extracted subject IDs
+    Psubjects = Subject.objects.filter(id__in=subject_ids)
     Imarks = InternalMarks.objects.filter(marks_std=student)
 
     if request.method == 'POST':
@@ -1702,25 +1728,50 @@ def studentInternal(request):
     try:
         student = Student.objects.get(user=request.user)
     except Student.DoesNotExist:
-        return render(request, 'student/StudentInternal.html', {'error_message': 'Parent not found'})
-    except Student.DoesNotExist:
         return render(request, 'student/StudentInternal.html', {'error_message': 'Student not found'})
 
-    if student.Sem.semester == 1 or student.Sem.semester == 2:
-        startsem = 1
-        endsem = 2
-    elif student.Sem.semester == 3 or student.Sem.semester == 4:
-        startsem = 3
-        endsem = 4
-    elif student.Sem.semester == 5 or student.Sem.semester == 6:
-        startsem = 5
-        endsem = 6
+    semesters = Semesters.objects.all()
 
-    Psubjects = Subject.objects.filter(sem__in=range(startsem, endsem + 1))
-    Imarks = InternalMarks.objects.filter(marks_std=student,subject__in=Psubjects)
-    data = zip(Psubjects,Imarks)
-    print(student)
-    context = {'student': student, 'internal_marks': Imarks,'data': data,'subjects':Psubjects}
+    if request.method == 'POST':
+        selected_semester_id = request.POST.get('semester')
+        selected_semester = Semesters.objects.get(pk=selected_semester_id)
+    else:
+        # Default to the student's current semester if no semester is selected
+        selected_semester = student.Sem
+
+    # Define semester-wise start and end semesters
+    if selected_semester.semester in [1, 2]:
+        start_semester = 1
+        end_semester = 2
+    elif selected_semester.semester in [3, 4]:
+        start_semester = 3
+        end_semester = 4
+    elif selected_semester.semester in [5, 6]:
+        start_semester = 5
+        end_semester = 6
+    else:
+        # Handle other cases if needed
+        start_semester = None
+        end_semester = None
+
+    # Filter subjects and internal marks based on the selected semester range
+    if start_semester is not None and end_semester is not None:
+        subjects = Subject.objects.filter(sem__in=range(start_semester, end_semester + 1))
+        internal_marks = InternalMarks.objects.filter(marks_std=student, subject__in=subjects)
+        data = zip(subjects, internal_marks)
+    else:
+        subjects = []
+        internal_marks = []
+        data = []
+
+    context = {
+        'student': student,
+        'internal_marks': internal_marks,
+        'data': data,
+        'subjects': subjects,
+        'selected_semester': selected_semester,
+        'semesters': semesters,
+    }
     return render(request, 'student/StudentInternal.html', context)
 def studentLeave(request):
     

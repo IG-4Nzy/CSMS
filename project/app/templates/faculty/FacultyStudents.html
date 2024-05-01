@@ -78,9 +78,8 @@
     {% endif %}
             
     <div >
-        <p>Name : {{faculty.user.first_name}}</p>
+        <p>Name : {{faculty.user.first_name}} {{faculty.user.last_name}}</p>
         <p>Designation : {{faculty.Faculty_Designation}}</p>
-        <p>Date Of Join : {{faculty.Faculty_Doj}}</p>
     </div>
     </div>
 
@@ -136,37 +135,43 @@
                             </th>
                             <th class="w-[10rem] px-4 py-2">Admission No</th>
                             <th class="w-[10rem] px-4 py-2">Phone Number</th>
+                            <th class="w-[10rem] px-4 py-2">Attendance count</th>
                             <th class="w-[5rem] px-4 py-2 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for student in students %}
-                        <tr>
-                          <td class="w-[10rem] px-4 py-2">
-                                {% if student.Student_Profile %}
-                                <a href="{% url 'ViewStudentProfile' id=student.id %}">   <img src="{{ student.Student_Profile.url }}" alt="Profile Picture" class="w-12 h-12 rounded-full">
-                                {% else %}
-                                    <!-- Display a default profile picture if no profile picture is available -->
-                                    <img src="{% static 'images/default_profile_picture.jpg' %}" alt="Default Profile Picture" class="w-12 h-12 rounded-full"></a>
-                                {% endif %}
-                            </td>
-                            <td class="w-[10rem] px-4 py-2">{{ student.user.first_name }}</td>
-                            <td class="w-[10rem] px-4 py-2">{{ student.AdmissionNo }}</td>
-                            <td class="w-[10rem] px-4 py-2">{{ student.Student_PhoneNum }}</td>
-                            <td class="w-[5rem] px-4 py-2 text-center">
-                                <!-- Add remove button -->
-                                <div class="flex space-x-5"><form action="{% url 'remove_student' student.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove</button>
-                                </form>
-                                <form action="{% url 'promote_student' student.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Promote</button>
-                                </form></div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+    {% for student in students %}
+    <tr>
+        <td class="w-[10rem] px-4 py-2">
+            {% if student.Student_Profile %}
+            <a href="{% url 'ViewStudentProfile' id=student.id %}">
+                <img src="{{ student.Student_Profile.url }}" alt="Profile Picture" class="w-12 h-12 rounded-full">
+            {% else %}
+                <!-- Display a default profile picture if no profile picture is available -->
+                <img src="{% static 'images/default_profile_picture.jpg' %}" alt="Default Profile Picture" class="w-12 h-12 rounded-full">
+            {% endif %}
+            </a>
+        </td>
+        <td class="w-[10rem] px-4 py-2">{{ student.user.first_name }}</td>
+        <td class="w-[10rem] px-4 py-2">{{ student.AdmissionNo }}</td>
+        <td class="w-[10rem] px-4 py-2">{{ student.Student_PhoneNum }}</td>
+        <td class="w-[10rem] px-4 py-2">{{ student.count }} / {{student.dates}} Days</td> <!-- New column for total attendance -->
+        <td class="w-[5rem] px-4 py-2 text-center">
+            <!-- Add remove button -->
+            <div class="flex space-x-5">
+                <form action="{% url 'remove_student' student.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove</button>
+                </form>
+                <form action="{% url 'promote_student' student.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Promote</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
                 </table>
             </div>
     

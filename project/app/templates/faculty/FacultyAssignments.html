@@ -98,10 +98,9 @@
         <a href="{% url 'FacultyEditProfile' faculty_id=faculty.id %}"><img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> </a> 
     {% endif %}
             
-    <div >
-        <p>Name : {{faculty.user.first_name}}</p>
+   <div >
+        <p>Name : {{faculty.user.first_name}} {{faculty.user.last_name}}</p>
         <p>Designation : {{faculty.Faculty_Designation}}</p>
-        <p>Date Of Join : {{faculty.Faculty_Doj}}</p>
     </div>
     </div>
 

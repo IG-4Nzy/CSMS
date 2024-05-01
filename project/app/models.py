@@ -84,7 +84,7 @@ class FacultySubject(models.Model):
     department = models.ForeignKey(Departments, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.subject
+        return f"{self.faculty} - {self.subject} - {self.sem}"
 
 class FacultyAssignment(models.Model):
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True)
@@ -110,6 +110,8 @@ class Student(models.Model):
     percentage = models.IntegerField(null = True)
     attendance_status = models.CharField(max_length = 100 , default="Waiting",null = True)
     attendance_statusAfternoon = models.CharField(max_length = 100 , default="Waiting",null = True)
+    count = models.IntegerField(null = True)
+    dates =  models.IntegerField(null = True)
 
 class StudentAttendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='attendances')
