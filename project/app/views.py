@@ -980,7 +980,7 @@ def HodViewAttendance(request):
     return render(request, 'hod/HodViewAttendance.html',context)
 def remove_subject(request, subject_id):
     
-    subject = Subject.objects.get(id=subject_id)
+    subject = FacultySubject.objects.get(id=subject_id)
     subject.delete()
     return redirect('HodDash')
 def deleteFaculty(request, id):
