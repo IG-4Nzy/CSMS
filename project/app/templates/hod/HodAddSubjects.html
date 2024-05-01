@@ -113,29 +113,33 @@
             </form>
             
         </div>
-        <div class="departments overflow-scroll h-[30rem] overflow-x-hidden text-white">
-            <h2>Subjects</h2>
-            <ul class="divide-y divide-gray-200 text-white">
-                {% for subject in subjects %}
-                <li class="py-4 text-white">
-                    <div class="flex items-center justify-between text-white">
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-200 truncate">{{ subject.name }}</p>
-                            <p class="text-sm text-gray-300 truncate">SEMESTER {{ subject.sem.semester }}</p>
-                        </div>
-                        <div class="ml-4 flex-shrink-0">
-                            <a href="{% url 'HodDeleteSubjects' id=subject.id %}" class="text-red-500 hover:text-red-700">
-                                <span class="sr-only">Delete</span>
-                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 011.414 1.414L11.414 12l4.293 4.293a1 1 0 01-1.414 1.414L10 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 12 4.293 7.707a1 1 0 011.414-1.414L10 10.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+        <div class="overflow-scroll h-[30rem] overflow-x-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semester</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                <th scope="col" class="relative px-6 py-3"><span class="sr-only">Delete</span></th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for subject in subjects %}
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subject.sem.semester }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subject.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="{% url 'HodDeleteSubjects' id=subject.id %}" class="text-red-500 hover:text-red-700">
+                        <span class="sr-only">Delete</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 011.414 1.414L11.414 12l4.293 4.293a1 1 0 01-1.414 1.414L10 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 12 4.293 7.707a1 1 0 011.414-1.414L10 10.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
     
 </body>
 </html>

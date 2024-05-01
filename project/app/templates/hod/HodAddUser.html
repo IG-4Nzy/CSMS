@@ -30,19 +30,19 @@
             {% endif %}
             <div>
                 <label for="firstname" class="block text-gray-200">First Name:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="Enter your first name" required>
+                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="Enter your first name" required>
             </div>
             <div>
                 <label for="lastname" class="block text-gray-200">Last Name:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="lastname" id="lastname" placeholder="Enter your last name" required>
+                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="lastname" id="lastname" placeholder="Enter your last name" required>
             </div>
             <div>
                 <label for="username" class="block text-gray-200">Username:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="username" id="username" placeholder="Enter your username" required>
+                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="username" id="username" placeholder="Enter your username" required>
             </div>
             <div>
                 <label for="email" class="block text-gray-200">Email:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="email" name="email" id="email" placeholder="Enter your email" required>
+                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="email" name="email" id="email" placeholder="Enter your email" required>
             </div>
             <div>
                 <label for="dob" class="block text-gray-200">Date of Birth:</label>
@@ -50,11 +50,11 @@
             </div>
             <div>
                 <label for="designation" class="block text-gray-200">Designation:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="designation" id="designation" placeholder="Enter your designation" required>
+                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="designation" id="designation" placeholder="Enter your designation" required>
             </div>
             <div>
                 <label for="department" class="block text-gray-200">Department:</label>
-                <select class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" name="department" id="department" required>
+                <select class="text-black border border-gray-300 rounded-md  px-4 block w-full" name="department" id="department" required>
                     <option value="">Select Department</option>
                     {% for department in departments %}
                         <option value="{{department.id}}">{{department.department_name}}</option>
@@ -63,12 +63,12 @@
             </div>
             <div>
                 <label for="pnum" class="block text-gray-200">Phone Number:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="tel" name="pnum" id="pnum" placeholder="Enter your phone number" required>
+                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="tel" name="pnum" id="pnum" placeholder="Enter your phone number" required>
             </div>
             <div>
                 <label for="pass" class="block text-gray-200">Password:</label>
                 <div class="relative">
-                    <input class="flex text-center text-black border border-gray-300 rounded-md py-2 px-4 block w-full pr-12" type="password" id="pass" name="pass" placeholder="Enter your password" required>
+                    <input class="flex text-center text-black border border-gray-300 rounded-md  px-4 block w-full pr-12" type="password" id="pass" name="pass" placeholder="Enter your password" required>
                     <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-300 bg-gray-600 border border-gray-300 rounded-l-none rounded-md" onclick="togglePasswordVisibility()" type="button" id="togglePassVisibility">
                         Show Pass
                     </button>
@@ -76,17 +76,17 @@
             </div>
             <div>
                 <label for="pass2" class="block text-gray-200">Confirm Password:</label>
-                <input class="flex text-center text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="password" id="pass2" name="pass2" placeholder="Confirm your password" required>
+                <input class="flex text-center text-black border border-gray-300 rounded-md  px-4 block w-full" type="password" id="pass2" name="pass2" placeholder="Confirm your password" required>
             </div>
             <div>
                 <label for="profile" class="block text-gray-200">Profile Picture:</label>
-                <input class="text-white border border-gray-300 rounded-md py-2 px-4 block w-full" type="file" name="profile" id="profile" required>
+                <input class="text-white border border-gray-300 rounded-md  px-4 block w-full" type="file" name="profile" id="profile" required>
             </div>
             <div>
-                <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center py-2 px-4 block w-full text-black mt-5" type="submit" value="Submit">
+                <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center  px-4 block w-full text-black mt-5" type="submit" value="Submit">
             </div>
             <div>
-                <a href="{% url 'HodDash' %}" class="bg-gray-500 rounded-3xl flex text-center justify-center content-center items-center py-2 px-4 block w-full text-black mt-5">Back</a>
+                <a href="{% url 'HodDash' %}" class="bg-gray-500 rounded-3xl flex text-center justify-center content-center items-center  px-4 block w-full text-black mt-5">Back</a>
             </div>
         </form>
     </div>

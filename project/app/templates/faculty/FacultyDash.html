@@ -108,49 +108,9 @@
                     <div>Total Staffs</div>
                     <p id="facultyCount">{{ faculties }}</p>
                 </div>
-                <div class="w-[20rem] h-[20rem]">
-                    <canvas class="w-10 h-10" id="chart" width="1" height="1"></canvas>
-                </div> 
             </div>
         </div>
     </div>
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var studentCount = parseInt(document.getElementById('studentCount').innerText);
-        var facultyCount = parseInt(document.getElementById('facultyCount').innerText);
 
-        var ctx = document.getElementById('chart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Students', 'Staffs'],
-                datasets: [{
-                    label: 'Total Count',
-                    data: [studentCount, facultyCount],
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true, // Add this to make sure the chart fits within the canvas size
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    });
-</script>
 </html>

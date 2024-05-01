@@ -20,39 +20,39 @@
          <div id="alertMsg" class="hidden fixed bottom-0 left-0 w-full bg-green-500 text-white py-3 text-center">
                 User added successfully!
             </div>
-        <form method="post" enctype="multipart/form-data"  class="rounded-3xl flex flex-col w-[30rem] text-center space-y-5 border-2 border-gray-200 p-5 " onsubmit="return validateForm()">
+        <form method="post" enctype="multipart/form-data"  class="rounded-3xl flex flex-col w-[30rem] text-center space-y-3 border-2 border-gray-200 p-2 " onsubmit="return validateForm()">
             {% csrf_token %}
             {% if msg %}
-                <div class="error bg-red-500 text-white px-4 py-2 rounded" id="errorMsg">{{ msg }}</div>
+                <div class="error bg-red-500 text-white px-4  rounded" id="errorMsg">{{ msg }}</div>
             {% endif %}
 <div class="max-w-md mx-auto">
         <div>
             <label for="firstname" class="block text-gray-300">First Name:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="First name" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="First name" required>
         </div>
         <div>
             <label for="lastname" class="block text-gray-300">Last Name:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="Lastname" id="lastname" placeholder="Last name" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="Lastname" id="lastname" placeholder="Last name" required>
         </div>
         <div>
             <label for="username" class="block text-gray-300">Username:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="username" id="username" placeholder="Username" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="username" id="username" placeholder="Username" required>
         </div>
         <div>
             <label for="email" class="block text-gray-300">Email:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="email" name="email" id="email" placeholder="Email" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="email" name="email" id="email" placeholder="Email" required>
         </div>
         <div>
             <label for="dob" class="block text-gray-300">Date Of Birth:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
         </div>
         <div>
             <label for="designation" class="block text-gray-300">Designation:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="text" name="Designation" id="designation" placeholder="Designation" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="Designation" id="designation" placeholder="Designation" required>
         </div>
         <div>
             <label for="department" class="block text-gray-300">Department:</label>
-            <select class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" name="Department" id="department" required>
+            <select class="text-black border border-gray-300 rounded-md  px-4 block w-full" name="Department" id="department" required>
                 <option value="">Select Department</option>
                 {% for department in departments %}
                     <option value="{{department.id}}">{{department.department_name}}</option>
@@ -61,30 +61,30 @@
         </div>
         <div>
             <label for="pnum" class="block text-gray-300">Phone Number:</label>
-            <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="number" name="pnum" id="pnum" placeholder="Phone number" required>
+            <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="number" name="pnum" id="pnum" placeholder="Phone number" required>
         </div>
         <div>
     <label for="pass" class="block text-gray-300">Password:</label>
         <div class="relative">
-            <input class="flex text-center text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="password" id="password" name="pass" placeholder="Password" required>
-            <button type="button" class="absolute inset-y-0 right-0 px-3 py-2 text-gray-600" onclick="togglePasswordVisibility()">
+            <input class="flex text-center text-black border border-gray-300 rounded-md  px-4 block w-full" type="password" id="pass" name="pass" placeholder="Password" required>
+            <button type="button" class="absolute inset-y-0 right-0 px-3  text-gray-600" onclick="togglePasswordVisibility()" >
                 Show
             </button>
         </div>
     </div>
         <div>
             <label for="pass2" class="block text-gray-300">Confirm Password:</label>
-            <input class="flex text-center text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="password" id="password" name="pass2" placeholder="Confirm password" required>
+            <input class="flex text-center text-black border border-gray-300 rounded-md  px-4 block w-full" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
         </div>
         <div>
             <label for="profile" class="block text-gray-300">Profile Picture:</label>
-            <input class="text-white border border-gray-300 rounded-md py-2 px-4 block w-full" type="file" name="profile" id="profile" placeholder="Profile" required>
+            <input class="text-white border border-gray-300 rounded-md  px-4 block w-full" type="file" name="profile" id="profile" placeholder="Profile" required>
         </div>
         <div>
-            <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center py-2 px-4 block w-full text-black mt-5" type="submit" value="Submit">
+            <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center  px-4 block w-full text-black mt-5" type="submit" value="Submit">
         </div>
         <div>
-            <a href="{% url 'PrincipalDash' %}" class="bg-gray-500 rounded-3xl flex text-center justify-center content-center items-center py-2 px-4 block w-full text-black mt-5">Back</a>
+            <a href="{% url 'PrincipalDash' %}" class="bg-gray-500 rounded-3xl flex text-center justify-center content-center items-center  px-4 block w-full text-black mt-5">Back</a>
         </div>
 </div>
         </form>

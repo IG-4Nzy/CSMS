@@ -338,14 +338,27 @@ def PrincipalViewFaculty(request):
     principal = Principal.objects.get(user=request.user)
     try:
         faculty = Faculty.objects.filter(Is_Active=True)
-        # departments = faculty.values_list('Faculty_Department', flat=True).distinct()
         departments = Departments.objects.all()
-        selected_department = request.GET.get('department')
+        selected_department_id = request.GET.get('department')
+        print(selected_department_id)
         
-        if selected_department:
-            # Display faculties of the selected department
-            faculty = faculty.filter(Faculty_Department=selected_department)
-        
+        if selected_department_id:
+            # Check if the selected department ID is a valid integer
+            try:
+                selected_department_id = int(selected_department_id)
+            except ValueError:
+                selected_department_id = None
+
+            if selected_department_id:
+                # Display faculties of the selected department
+                faculty = faculty.filter(Faculty_Department=selected_department_id)
+                selected_department = Departments.objects.get(pk=selected_department_id)
+            else:
+                selected_department = None
+        else:
+            faculty = Faculty.objects.all()
+            selected_department = None
+
         context = {
             'facultys': faculty,
             'departments': departments,
@@ -834,6 +847,10 @@ def HodAddFaculty(request):
             return render(request, 'hod/HodAddUser.html', context)
         else:
             if Faculty.objects.filter(user__username=username).exists():
+                context['msg'] = 'Username already exists'
+                return render(request, 'hod/HodAddUser.html', context)
+            
+            if User.objects.filter(username=username).exists():
                 context['msg'] = 'Username already exists'
                 return render(request, 'hod/HodAddUser.html', context)
 
