@@ -54,9 +54,11 @@
                         class="ml-2 text-sm text-gray-200 focus:outline-none" >Show</button>
                 </div>
             </div>
+            <div class="flex">
             <button type="submit"
                 class="bg-[#7747ff] w-max m-auto px-6 py-2 rounded text-white text-sm font-normal">Submit</button>
-
+            <a class="bg-[#7747ff] w-max m-auto px-6 py-2 rounded text-white text-sm font-normal" href="{% url 'home' %}">Home</a>
+            </div>
         </form>
         <div class="text-sm text-center mt-[1.6rem] text-gray-200">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
                 href="{% url 'StudentReg' %}">Register as a student</a></div>
