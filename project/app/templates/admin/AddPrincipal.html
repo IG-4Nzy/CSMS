@@ -18,7 +18,7 @@
     <div class="flex items-center justify-center content-center w-1/2">
         <form class="flex flex-col gap-5 w-[20rem] h-[50rem] justify-center content-center items-center" method="post" action="{% url 'AddPrincipal' %}" enctype="multipart/form-data" onsubmit="return validateForm()"> 
             {% csrf_token %}
-            {% if msg %}<div class="error flex items-center justiify-center text-center " id="errorMsg">{{ msg }}</div>{% endif %}
+            {% if msg %}<div class="error flex items-center justiify-center text-center text-red-500 border-red-500 border-2 p-5 rounded-3xl " id="errorMsg">{{ msg }}</div>{% endif %}
             <div class="max-w-md mx-auto space-y-5">
         <div>
             <label for="name" class="block text-gray-300">Name:</label>
@@ -70,95 +70,96 @@
     </div>
    
 
-   
-</body>
 <script>
     // Get the password input fields
-var passwordField = document.getElementById("password");
-var cpasswordField = document.getElementById("cpassword");
+    var passwordField = document.getElementById("password");
+    var cpasswordField = document.getElementById("cpassword");
 
-// Get the checkbox for toggling password visibility
-var showPasswordCheckbox = document.getElementById("showPassword");
+    // Get the checkbox for toggling password visibility
+    var showPasswordCheckbox = document.getElementById("showPassword");
 
-// Function to toggle password visibility
-function togglePasswordVisibility() {
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        cpasswordField.type = "text";
-    } else {
-        passwordField.type = "password";
-        cpasswordField.type = "password";
-    }
-}
-
-// Event listener for the checkbox
-showPasswordCheckbox.addEventListener("change", function() {
-    togglePasswordVisibility();
-});
-
-function validateForm() {
-    var name = document.getElementById("name").value.trim();
-    var username = document.getElementById("username").value.trim();
-    var password = document.getElementById("password").value;
-    var confirmPassword = document.getElementById("cpassword").value;
-    var email = document.getElementById("email").value;
-    var dob = document.getElementById("principalDOB").value;
-    var phoneNum = document.getElementById("principal_PhoneNUm").value;
-
-     var nameRegex = /^[a-zA-Z\s]+$/;
-    if (!nameRegex.test(name)) {
-        alert("Name should only contain letters and spaces.");
-        return false;
+    // Function to toggle password visibility
+    function togglePasswordVisibility() {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            cpasswordField.type = "text";
+        } else {
+            passwordField.type = "password";
+            cpasswordField.type = "password";
+        }
     }
 
-    // Username validation
-    var usernameRegex = /^[a-zA-Z]+$/;
-    if (!usernameRegex.test(username)) {
-        alert("Username should only contain letters.");
-        return false;
-    }
+    // Event listener for the checkbox
+    showPasswordCheckbox.addEventListener("change", function() {
+        togglePasswordVisibility();
+    });
 
-    // Password strength check
-    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    if (!strongRegex.test(password)) {
-        alert("Password should contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.");
-        return false;
-    }
+    function validateForm() {
+        var name = document.getElementById("name").value.trim();
+        var username = document.getElementById("username").value.trim();
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("cpassword").value;
+        var email = document.getElementById("email").value;
+        var dob = document.getElementById("principalDOB").value;
+        var phoneNum = document.getElementById("principal_PhoneNUm").value;
 
-    // Password matching check
-    if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return false;
-    }
+        var nameRegex = /^[a-zA-Z\s]+$/; // Only letters and spaces
+        var usernameRegex = /^(?![0-9]+$)[a-zA-Z0-9]+$/; // Alphanumeric, not all numbers
 
-    // Email format check
-    var emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
-        alert("Please enter a valid email address.");
-        return false;
-    }
+        // Name validation
+        if (!nameRegex.test(name)) {
+            alert("Name should only contain letters and spaces.");
+            return false;
+        }
 
-    // Date of birth (age > 18 years) check
-    var dobDate = new Date(dob);
-    var today = new Date();
-    var age = today.getFullYear() - dobDate.getFullYear();
-    var m = today.getMonth() - dobDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
-        age--;
-    }
-    if (age < 18) {
-        alert("You must be at least 18 years old to register.");
-        return false;
-    }
+        // Username validation
+        if (!usernameRegex.test(username)) {
+            alert("Username should contain at least one letter and can't be full of numbers.");
+            return false;
+        }
 
-    // Phone number check
-    var phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(phoneNum)) {
-        alert("Please enter a valid 10-digit phone number.");
-        return false;
-    }
+        // Password strength check
+        var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+        if (!strongRegex.test(password)) {
+            alert("Password should contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.");
+            return false;
+        }
 
-    return true;
-}
+        // Password matching check
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+
+        // Email format check
+        var emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        // Date of birth (age > 18 years) check
+        var dobDate = new Date(dob);
+        var today = new Date();
+        var age = today.getFullYear() - dobDate.getFullYear();
+        var m = today.getMonth() - dobDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
+            age--;
+        }
+        if (age < 18) {
+            alert("You must be at least 18 years old to register.");
+            return false;
+        }
+
+        // Phone number check
+        var phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(phoneNum)) {
+            alert("Please enter a valid 10-digit phone number.");
+            return false;
+        }
+
+        return true; // Form submission allowed
+    }
 </script>
+</body>
 </html>

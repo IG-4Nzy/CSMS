@@ -99,6 +99,10 @@
 </div>
 
 <script>
+     window.onload = function() {
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+    }
     // Function to toggle password visibility
     function togglePasswordVisibility() {
         var passField = document.getElementById("pass");
@@ -129,6 +133,26 @@
         var pass = document.getElementById('pass').value;
         var pass2 = document.getElementById('pass2').value;
         var profile = document.getElementById('profile').value;
+
+
+
+       var nameRegex = /^[a-zA-Z\s]+$/;// Only letters
+        var usernameRegex = /^(?![0-9]+$)[a-zA-Z0-9]+$/; // Alphanumeric, not all numbers
+
+        // Validation
+        if (!nameRegex.test(firstname)) {
+            alert("First name should contain only letters.");
+            return false;
+        }
+        if (!nameRegex.test(lastname)) {
+            alert("Last name should contain only letters.");
+            return false;
+        }
+        if (!usernameRegex.test(username)) {
+            alert("Username should contain at least one letter and can't be full of numbers.");
+            return false;
+        }
+        return true; // Form submission allowed
 
         // Perform validation
         if (firstname === '' || lastname === '' || username === '' || email === '' || dob === '' || designation === '' || department === '' || pnum === '' || pass === '' || pass2 === '' || profile === '') {

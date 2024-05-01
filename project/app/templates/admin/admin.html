@@ -55,7 +55,7 @@
                         </div>
                         <div class="mt-6 sm:mt-0 sm:col-span-2">
                             <div class="flex justify-end">
-                                <a href="{% url 'removePrincipal' principal_instance.id %}" class="hover:text-red-900 bg-red-500 rounded-3xl text-white p-2 font-bold">Remove</a>
+                                <a href="{% url 'removePrincipal' principal_instance.user.id %}" class="hover:text-red-900 bg-red-500 rounded-3xl text-white p-2 font-bold">Remove</a>
                             </div>
                         </div>
                     </div>

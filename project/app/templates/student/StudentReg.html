@@ -37,181 +37,184 @@
     </style>
 </head>
 
-<body class="h-screen w-screen flex items-center justify-center content-center bgLogin ">
+<body class="h-screen w-screen flex-col flex  bgLogin ">
+    <div class="text-xl mt-5 h-[0.2rem] px-5">Student Registration</div>
+    <div class="h-screen w-screen  flex items-center justify-center content-center" >
     <div id="alertMsg" class="hidden fixed bottom-0 left-0 w-full bg-green-500 text-white py-3 text-center">
         Registered Successfully, Wait For the Faculty to Approved !
     </div>
     <div class="w-screen">
-        <form autocomplete="off" class="flex flex-col space-y-5 items-center content-center justify-center"
-            method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-            {% csrf_token %}
-            <div class="error"></div>
-            <div class="flex flex-col items-center justify-center space-y-3">
-                <p class="text-red-500 mt-5">{{msg}}</p>
-                <form class="w-[20rem] space-y-4">
-                    <label for="firstname">First Name:</label>
-                    <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="text" name="firstname" id="firstname" placeholder="First name" required>
+        <form autocomplete="off" class="flex flex-col space-y-3 items-center content-center justify-center"
+      method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="error"></div>
+    <div class="flex flex-col items-center justify-center space-y-2">
+        <p class="text-red-500 mt-3">{{msg}}</p>
+        <label for="firstname">First Name:</label>
+        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="text" name="firstname" id="firstname" placeholder="First name" required>
 
-                    <label for="lastname">Last Name:</label>
-                    <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="text" name="lastname" id="lastname" placeholder="Last name" required>
+        <label for="lastname">Last Name:</label>
+        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="text" name="lastname" id="lastname" placeholder="Last name" required>
 
-                    <label for="username">Username:</label>
-                    <input autocomplete="off"
-                        class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="text" name="username" id="username" placeholder="Username" required>
+        <label for="username">Username:</label>
+        <input autocomplete="off"
+               class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="text" name="username" id="username" placeholder="Username" required>
 
-                    <label for="email">Email:</label>
-                    <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="email" name="email" id="email" placeholder="Email" required>
+        <label for="email">Email:</label>
+        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="email" name="email" id="email" placeholder="Email" required>
 
-                    <label for="dob">Date Of Birth:</label>
-                    <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
+        <label for="dob">Date Of Birth:</label>
+        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
 
-                    <label for="department">Department:</label>
-                    <select class="select text-black w-full border border-gray-300 rounded-md py-2 px-4"
-                        name="department" id="department">
-                        <option value="">Select Department</option>
-                        {% for department in departments %}
-                        <option value="{{department.id}}">{{department.department_name}}</option>
-                        {% endfor %}
-                    </select>
+        <label for="department">Department:</label>
+        <select class="select text-black w-full border border-gray-300 rounded-md py-1 px-3"
+                name="department" id="department">
+            <option value="">Select Department</option>
+            {% for department in departments %}
+            <option value="{{department.id}}">{{department.department_name}}</option>
+            {% endfor %}
+        </select>
 
-                    <label for="pnum">Phone Number:</label>
-                    <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="text" name="pnum" id="pnum" placeholder="Phone number" required>
+        <label for="pnum">Phone Number:</label>
+        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="text" name="pnum" id="pnum" placeholder="Phone number" required>
 
-                    <label for="pass">Password:</label>
-                    <div class="relative">
-                        <input
-                            class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4 pr-10"
-                            type="password" id="pass" name="pass" placeholder="Password" required><br>
-                        <button
-                            class="absolute w-14 h-10 inset-y-0 right-0 flex items-center justify-center bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none"
-                            type="button" id="togglePassVisibility">Show</button>
-                    </div>
+        <label for="pass">Password:</label>
+        <div class="relative">
+            <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3 pr-8"
+                   type="password" id="pass" name="pass" placeholder="Password" required><br>
+            <button class="absolute w-14 h-8 inset-y-0 right-0 flex items-center justify-center bg-gray-200 text-gray-800 py-1 px-2 rounded-md hover:bg-gray-300 focus:outline-none"
+                    type="button" id="togglePassVisibility">Show</button>
+        </div>
 
-                    <label for="pass2">Confirm Password:</label>
-                    <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
+        <label for="pass2">Confirm Password:</label>
+        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
 
-                    <label for="profile">Profile Picture:</label>
-                    <input class="text-white flex text-center w-full border border-gray-300 rounded-md py-2 px-4"
-                        type="file" name="profile" id="profile" placeholder="Profile" required>
+        <label for="profile">Profile Picture:</label>
+        <input class="text-white flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
+               type="file" name="profile" id="profile" placeholder="Profile" required>
 
-                    <div class="flex justify-between gap-5 mt-10">
-                        <input
-                            class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-24 text-black cursor-pointer"
-                            type="submit" value="Submit">
-                        <a class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-24 text-black cursor-pointer"
-                            href="{% url 'login' %}">Back</a>
-                    </div>
-                </form>
-            </div>
-        </form>
+        <div class="flex justify-between gap-3 mt-5">
+            <input class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-20 text-black cursor-pointer"
+                   type="submit" value="Submit">
+            <a class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-20 text-black cursor-pointer"
+               href="{% url 'login' %}">Back</a>
+        </div>
+    </div>
+</form>
     </div>
 
     <div class="w-1/2 flex items-center justify-center content-center items-center p-5 mr-24 flex-col clg">
         <img class="clg" src="{% static 'img/student.jpeg' %}">
     </div>
+</div>
 
 
 
     <script>
-        // Get the password input fields and the button
+    window.onload = function() {
+        document.getElementById('username').value = '';
+        document.getElementById('pass').value = '';
+        document.getElementById('pass2').value = '';
+    };
+
+    function togglePasswordVisibility() {
         var passField = document.getElementById("pass");
         var pass2Field = document.getElementById("pass2");
         var toggleButton = document.getElementById("togglePassVisibility");
 
-        // Function to toggle password visibility
-        function togglePasswordVisibility() {
-            if (passField.type === "password") {
-                passField.type = "text";
-                pass2Field.type = "text";
-                toggleButton.textContent = "Hide Password";
-            } else {
-                passField.type = "password";
-                pass2Field.type = "password";
-                toggleButton.textContent = "Show Password";
-            }
+        if (passField.type === "password") {
+            passField.type = "text";
+            pass2Field.type = "text";
+            toggleButton.textContent = "Hide Password";
+        } else {
+            passField.type = "password";
+            pass2Field.type = "password";
+            toggleButton.textContent = "Show Password";
+        }
+    }
+
+    function validateForm() {
+        var firstname = document.getElementById('firstname').value.trim();
+        var lastname = document.getElementById('lastname').value.trim();
+        var username = document.getElementById('username').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var dob = document.getElementById('dob').value.trim();
+        var department = document.getElementById('department').value.trim();
+        var pnum = document.getElementById('pnum').value.trim();
+        var pass = document.getElementById('pass').value;
+        var pass2 = document.getElementById('pass2').value;
+
+        var nameRegex = /^[a-zA-Z\s]+$/;
+        var usernameRegex = /^(?![0-9]+$)[a-zA-Z0-9]+$/; // Alphanumeric, not all numbers
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var phoneRegex = /^\d{10}$/;
+        var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+        if (!nameRegex.test(firstname)) {
+            alert("First name should contain only letters.");
+            return false;
+        }
+        if (!nameRegex.test(lastname)) {
+            alert("Last name should contain only letters.");
+            return false;
+        }
+        if (!usernameRegex.test(username)) {
+            alert("Username should contain at least one letter and can't be full of numbers.");
+            return false;
+        }
+        if (!emailRegex.test(email)) {
+            alert("Invalid email address");
+            return false;
+        }
+        if (!phoneRegex.test(pnum)) {
+            alert("Invalid phone number. Please enter 10 digits without spaces or special characters");
+            return false;
+        }
+        if (!passwordRegex.test(pass)) {
+            alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
+            return false;
+        }
+        if (pass !== pass2) {
+            alert("Passwords do not match");
+            return false;
         }
 
-        // Event listener for the button
-        toggleButton.addEventListener("click", function () {
-            togglePasswordVisibility();
-        });
-
-        function validateForm() {
-            var firstname = document.getElementById('firstname').value.trim();
-            var lastname = document.getElementById('lastname').value.trim();
-            var username = document.getElementById('username').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var dob = document.getElementById('dob').value.trim();
-            var department = document.getElementById('department').value.trim();
-            var pnum = document.getElementById('pnum').value.trim();
-            var pass = document.getElementById('pass').value;
-            var pass2 = document.getElementById('pass2').value;
-
-            // Email validation
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Invalid email address");
-                return false;
-            }
-
-            // Phone number validation
-            var phoneRegex = /^\d{10}$/;
-            if (!phoneRegex.test(pnum)) {
-                alert("Invalid phone number. Please enter 10 digits without spaces or special characters");
-                return false;
-            }
-
-            // Password validation
-            var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-            if (!passwordRegex.test(pass)) {
-                alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
-                return false;
-            }
-            if (pass !== pass2) {
-                alert("Passwords do not match");
-                return false;
-            }
-
-            var dobDate = new Date(dob);
-            var today = new Date();
-            var age = today.getFullYear() - dobDate.getFullYear();
-            var monthDiff = today.getMonth() - dobDate.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
-                age--;
-            }
-
-            // Check if age is less than 18
-            if (age < 18) {
-                alert("You must be 18 years or older to register.");
-                return false;
-            }
-
-            return true;
+        var dobDate = new Date(dob);
+        var today = new Date();
+        var age = today.getFullYear() - dobDate.getFullYear();
+        var monthDiff = today.getMonth() - dobDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+            age--;
         }
 
-        // Function to display an alert message
-        function displayAlertMsg() {
-            var alertDiv = document.getElementById('alertMsg');
-            alertDiv.classList.remove('hidden');
-            setTimeout(function () {
-                alertDiv.classList.add('hidden');
-            }, 3000); // Hide the message after 3 seconds (3000 milliseconds)
+        if (age < 18) {
+            alert("You must be 18 years or older to register.");
+            return false;
         }
 
-        // Check for success message in the URL query parameters
-        var urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('success')) {
-            // Display the alert message if success parameter is present
-            displayAlertMsg();
-        }
-    </script>
+        return true;
+    }
+
+    function displayAlertMsg() {
+        var alertDiv = document.getElementById('alertMsg');
+        alertDiv.classList.remove('hidden');
+        setTimeout(function () {
+            alertDiv.classList.add('hidden');
+        }, 3000);
+    }
+
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        displayAlertMsg();
+    }
+</script>
 </body>
 
 </html>

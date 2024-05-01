@@ -298,8 +298,8 @@ def AdminAddFaculty(request):
 
 # Principal
 def removePrincipal(request, pk):
-    principal = get_object_or_404(Principal, id=pk)
-    principal = Principal.objects.get(id=pk)
+    # principal = get_object_or_404(Principal, id=pk)
+    principal = User.objects.get(id=pk)
     principal.delete()
     return redirect(adminpage)
 def PrincipalRemoveHod(request, id):
