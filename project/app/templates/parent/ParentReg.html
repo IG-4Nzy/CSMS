@@ -35,53 +35,56 @@
 </head>
 <body class="flex h-screen w-screen justify-center content-center items-center bgLogin ">
     <div>
+        <div id="alertMsg" class="hidden fixed bottom-0 left-0 w-full bg-green-500 text-white py-3 text-center">
+        Registered Successfully, Wait For the Faculty to Approved !
+    </div>
     <form autocomplete="off" class="flex flex-col space-y-5 items-center content-center justify-center" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     {% csrf_token %}
     {{ msg }}
-  <div class="flex flex-col w-[30rem]">
-            <label for="firstname" class="text-gray-200">First Name:</label>
-            <input class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="text" id="firstname" name="firstname" placeholder="First name" required>
+    <div class="flex flex-col w-[30rem]">
+        <label for="firstname" class="text-gray-200">First Name:</label>
+        <input class="text-black text-center border border-gray-300 rounded-md" type="text" id="firstname" name="firstname" placeholder="First name" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="lastname" class="text-gray-200">Last Name:</label>
+        <input class="text-black text-center border border-gray-300 rounded-md" type="text" id="lastname" name="lastname" placeholder="Last name" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="admNo" class="text-gray-200">Admission Number of Student:</label>
+        <input class="text-black text-center border border-gray-300 rounded-md" type="text" id="admNo" name="admNo" placeholder="Admission Number of Student" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="username" class="text-gray-200">Username:</label>
+        <input autocomplete="off" class="text-black text-center border border-gray-300 rounded-md" type="text" id="username" name="username" placeholder="Username" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="email" class="text-gray-200">Email:</label>
+        <input class="text-black text-center border border-gray-300 rounded-md" type="email" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="pnum" class="text-gray-200">Phone Number:</label>
+        <input class="text-black text-center border border-gray-300 rounded-md" type="text" id="pnum" name="pnum" placeholder="Phone number" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="pass" class="text-gray-200">Password:</label>
+        <div class="relative">
+            <input class="text-black text-center border border-gray-300 rounded-md pr-[16rem]" type="password" id="pass" name="pass" placeholder="Password" required>
+            <button type="button" id="togglePassVisibility"  class="absolute inset-y-0 right-0 flex items-center justify-center bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400">Show</button>
         </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="lastname" class="text-gray-200">Last Name:</label>
-            <input class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="text" id="lastname" name="lastname" placeholder="Last name" required>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="admNo" class="text-gray-200">Admission Number of Student:</label>
-            <input class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="text" id="admNo" name="admNo" placeholder="Admission Number of Student" required>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="username" class="text-gray-200">Username:</label>
-            <input autocomplete="off" class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="text" id="username" name="username" placeholder="Username" required>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="email" class="text-gray-200">Email:</label>
-            <input class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="email" id="email" name="email" placeholder="Email" required>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="pnum" class="text-gray-200">Phone Number:</label>
-            <input class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="text" id="pnum" name="pnum" placeholder="Phone number" required>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="pass" class="text-gray-200">Password:</label>
-            <div class="relative ">
-                <input class="text-black text-center border border-gray-300 rounded-md py-2 px-4 pr-12" type="password" id="pass" name="pass" placeholder="Password" required>
-                <button type="button" id="togglePassVisibility"  class="absolute inset-y-0 right-0 flex items-center justify-center bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400">Show</button>
-            </div>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="pass2" class="text-gray-200">Confirm Password:</label>
-            <input  autocomplete="off" class="text-black text-center border border-gray-300 rounded-md py-2 px-4" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
-        </div>
-        <div class="flex flex-col w-[30rem]">
-            <label for="profile" class="text-gray-200">Profile Picture:</label>
-            <input  autocomplete="off" class="text-white text-center border border-gray-300 rounded-md py-2 px-4" type="file" id="profile" name="profile" placeholder="Profile">
-        </div>
-        <div class="flex justify-between space-x-10 ">
-            <input class="bg-green-500 rounded-3xl py-2 px-4 text-center text-black w-24 cursor-pointer" type="submit" value="Submit">
-            <a class="bg-green-500 rounded-3xl py-2 px-4 text-center text-black w-24 cursor-pointer" href="{% url 'login' %}">Back</a>
-        </div>
-    </form>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="pass2" class="text-gray-200">Confirm Password:</label>
+        <input  autocomplete="off" class="text-black text-center border border-gray-300 rounded-md" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
+    </div>
+    <div class="flex flex-col w-[30rem]">
+        <label for="profile" class="text-gray-200">Profile Picture:</label>
+        <input  autocomplete="off" class="text-white text-center border border-gray-300 rounded-md" type="file" id="profile" name="profile" placeholder="Profile">
+    </div>
+    <div class="flex justify-between space-x-10">
+        <input class="bg-green-500 rounded-3xl text-center text-black w-24 cursor-pointer" type="submit" value="Submit">
+        <a class="bg-green-500 rounded-3xl text-center text-black w-24 cursor-pointer" href="{% url 'login' %}">Back</a>
+    </div>
+</form>
 </div>
 <div class="w-1/2 flex items-center justify-center p-5">
     <img class="w-full rounded-md" src="{% static 'img/hod.jpg' %}" alt="Sample Image">
@@ -117,60 +120,73 @@
         });
 
         function validateForm() {
-            var firstname = document.getElementById('firstname').value.trim();
-            var lastname = document.getElementById('lastname').value.trim();
-            var admNo = document.getElementById('admNo').value.trim();
-            var username = document.getElementById('username').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var pnum = document.getElementById('pnum').value.trim();
-            var pass = document.getElementById('pass').value;
-            var pass2 = document.getElementById('pass2').value;
+    var firstname = document.getElementById('firstname').value.trim();
+    var lastname = document.getElementById('lastname').value.trim();
+    var admNo = document.getElementById('admNo').value.trim();
+    var username = document.getElementById('username').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var pnum = document.getElementById('pnum').value.trim();
+    var pass = document.getElementById('pass').value;
+    var pass2 = document.getElementById('pass2').value;
 
-            var nameRegex = /^[a-zA-Z\s]+$/; // Only letters
-            var usernameRegex = /^(?![0-9]+$)[a-zA-Z0-9]+$/; // Alphanumeric, not all numbers
+    var nameRegex = /^[a-zA-Z\s]+$/; // Only letters
+    var usernameRegex = /^(?![0-9]+$)[a-zA-Z0-9]+$/; // Alphanumeric, not all numbers
 
-            // Validation
-            if (!nameRegex.test(firstname)) {
-                alert("First name should contain only letters.");
-                return false;
-            }
-            if (!nameRegex.test(lastname)) {
-                alert("Last name should contain only letters.");
-                return false;
-            }
-            if (!usernameRegex.test(username)) {
-                alert("Username should contain at least one letter and can't be full of numbers.");
-                return false;
-            }
-            return true; // Form submission allowed
+    // Validation
+    if (!nameRegex.test(firstname)) {
+        alert("First name should contain only letters.");
+        return false;
+    }
+    if (!nameRegex.test(lastname)) {
+        alert("Last name should contain only letters.");
+        return false;
+    }
+    if (!usernameRegex.test(username)) {
+        alert("Username should contain at least one letter and can't be full of numbers.");
+        return false;
+    }
 
-            // Email validation
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Invalid email address");
-                return false;
-            }
+    // Email validation
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Invalid email address");
+        return false;
+    }
 
-            // Phone number validation
-            var phoneRegex = /^\d{10}$/;
-            if (!phoneRegex.test(pnum)) {
-                alert("Invalid phone number. Please enter 10 digits without spaces or special characters");
-                return false;
-            }
+    // Phone number validation
+    var phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(pnum)) {
+        alert("Invalid phone number. Please enter 10 digits without spaces or special characters");
+        return false;
+    }
 
-            // Password validation
-            var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-            if (!passwordRegex.test(pass)) {
-                alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
-                return false;
-            }
-            if (pass !== pass2) {
-                alert("Passwords do not match");
-                return false;
-            }
+    // Password validation
+    var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (!passwordRegex.test(pass)) {
+        alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
+        return false;
+    }
+    if (pass !== pass2) {
+        alert("Passwords do not match");
+        return false;
+    }
 
-            return true;
-        }
+    // Form submission allowed
+    return true;
+}
+
+function displayAlertMsg() {
+        var alertDiv = document.getElementById('alertMsg');
+        alertDiv.classList.remove('hidden');
+        setTimeout(function () {
+            alertDiv.classList.add('hidden');
+        }, 3000);
+    }
+
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        displayAlertMsg();
+    }
     </script>
 </body>
 </html>

@@ -96,7 +96,7 @@
             <a href="{% url 'FacultyAssignments' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Assignments</li></a>
             <a href="{% url 'FacultyNotes' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Notes</li></a>
             <a href="{% url 'FacultyInternal' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Internal</li></a>
-            <a href="{% url 'FacultyViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Student LeaveLetters</li></a>
+            <a href="{% url 'FacultyViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">LeaveLetters</li></a>
             <a href="{% url 'FacultyLeave' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">Request Leave</li></a>
         </ul>
     </div>
@@ -111,11 +111,13 @@
                     <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> 
                 {% endif %}
                     <h1 class="text-xl font-semibold mb-2">Name :{{ i.user.first_name }} {{ i.user.last_name }}</h1>
-                    <p class="text-sm text-gray-600 mb-2">Date Of Birth : {{ i.Student_Dob }}</p>
+                    <p class="text-sm text-gray-600 mb-2">Date Of Birth: {{ i.Student_Dob|date:"Y/n/j" }}</p>
                     <p class="text-sm text-gray-600 mb-4">Phone Num : {{ i.Student_PhoneNum }}</p>
                     <p class="text-sm text-gray-600 mb-4">Department : {{ i.Student_Department.department_name }}</p>
                     <div class="flex justify-center">
+                        {% if i.Is_Active == 'True' %}<p>Approved</p>{% elif i.Is_Active == 'Waiting' %}
                         <a href="{% url 'StdApproval' i.id %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Approve</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

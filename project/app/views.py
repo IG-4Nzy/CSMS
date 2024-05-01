@@ -1378,7 +1378,7 @@ def StdApprove(request):
     if not faculty.role == "tutor1":
         return HttpResponse("You do not have permission to approve student requests.")
     
-    students = Student.objects.filter(Student_Department=faculty.Faculty_Department, Is_Active="Waiting")
+    students = Student.objects.filter(Student_Department=faculty.Faculty_Department)
     context = {
         'faculty': faculty,
         'student' : students
@@ -1622,6 +1622,16 @@ def StudentReg(request):
         Department = request.POST.get('department')
         Student_PhoneNUm = request.POST.get('pnum')
         Student_Profile = request.FILES.get('profile')
+
+        dob_str = Student_Dob
+
+# Parse the input string into a datetime object
+        dob_date = datetime.strptime(dob_str, '%Y-%m-%d')
+
+        # Format the datetime object as "DD MM YYYY"
+        Student_Dob = dob_date.strftime('%d %m %Y')
+
+
 
         Student_Department = Departments.objects.get(pk=Department)
 
@@ -1879,7 +1889,7 @@ def ParentReg(request):
 
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
-        lastname = request.POST.get('Lastname')
+        lastname = request.POST.get('lastname')
         username = request.POST.get('username')
         admNo = request.POST.get('admNo')
         password = request.POST.get('pass')
@@ -1911,7 +1921,7 @@ def ParentReg(request):
         Parent.objects.create(user=user, Parent_Name=Parent_Name, Parent_num=Parent_PhoneNUm,
                                Parent_Profile=Parent_Profile, stdParent=stud , AdmissionNo=admNo)
 
-        return render(request, 'parent/ParentReg.html', context)
+        return HttpResponseRedirect(reverse('StudentReg') + '?success=1')
 
     return render(request, 'parent/ParentReg.html', context)
 def ParentDash(request):

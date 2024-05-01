@@ -97,7 +97,9 @@
                     <!-- Provide a placeholder or default image if no profile picture is available -->
                     <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2" src="{% static 'placeholder_image.jpg' %}" alt="profile"> 
                 {% endif %}
+                 {% if i.Is_Active == 'True' %}<p>Approved</p>{% elif i.Is_Active == 'Waiting' %}
             <a href="{% url 'ParentApproval' i.id %}" class="mt-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md">Approve</a>
+       {% endif %}
         </div>
         {% endfor %}
     </div>
