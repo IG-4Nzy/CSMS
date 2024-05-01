@@ -22,14 +22,14 @@ from django.db.models import F
 
 
 
+
+
 def set_password_for_all_users(new_password):
     users = User.objects.all()
     for user in users:
         user.set_password(new_password)
         user.save()
 def home(request):
-    # set_password_for_all_users("Pass@word1")
-    # add_bulk_students()
     return render(request,'home/index.html')
 def logout_view(request):
     logout(request)
