@@ -17,6 +17,7 @@ import re
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.db.models import Count
+from django.db.models import F
 
 
 
@@ -322,10 +323,12 @@ def PrincipalViewHod(request):
     return render(request,'Principal/PrincipalViewHod.html',context)
 def PrincipalViewStudents(request):
     principal = Principal.objects.get(user = request.user)
+    selected_department = request.GET.get('department')
     try:
-        students = Student.objects.filter(Is_Active="True")
+        students = Student.objects.filter(Is_Active="True",Student_Department = selected_department)
         departments = Departments.objects.all()
         selected_department = request.GET.get('department')
+        print(selected_department)
         context = {
             'student': students,
             'departments': departments,
@@ -1388,7 +1391,8 @@ def ParentApprove(request):
     faculty = Faculty.objects.get(user = request.user)
     if not faculty.role == "tutor1":
         return HttpResponse("You do not have permission to approve student requests.")
-    parents = Parent.objects.filter(Is_Active="Waiting")
+    parents = Parent.objects.filter(stdParent__Student_Department__faculty__Faculty_Department=F('stdParent__Student_Department__faculty__Faculty_Department')).distinct()
+    print(parents)
     context = {
         'parent' : parents,
         'faculty':faculty
@@ -1766,7 +1770,7 @@ def studentInternal(request):
 
     # Filter subjects and internal marks based on the selected semester range
     if start_semester is not None and end_semester is not None:
-        subjects = Subject.objects.filter(sem__in=range(start_semester, end_semester + 1))
+        subjects = Subject.objects.filter(sem__in=range(start_semester, end_semester + 1),department = student.Student_Department)
         internal_marks = InternalMarks.objects.filter(marks_std=student, subject__in=subjects)
         data = zip(subjects, internal_marks)
     else:

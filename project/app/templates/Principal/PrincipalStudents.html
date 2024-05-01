@@ -76,8 +76,8 @@
         </a>
             
         <div>
-            <p>Name :  {{principal.user.usename}}</p><p>{{principal.user.last_name}}</p>
-            <p>Date Of Join : {{principal.principal_Doj}}</p>
+            <p>Name :  {{principal.user.username}}</p><p>{{principal.user.last_name}}</p>
+            {% comment %} <p>Date Of Join : {{principal.principal_Doj}}</p> {% endcomment %}
         </div>
     </div>
 
@@ -95,7 +95,7 @@
                     <select class="text-black" id="selected_department" name="department" onchange="submitForm()">
                         <option value="">All Departments</option>
                         {% for department in departments %}
-                            <option class="text-black" value="{{ department.id }}" {% if department == selected_department %}selected{% endif %}>{{ department.department_name }}</option>
+                            <option class="text-black" value="{{ department.id }}" {% if department.id == selected_department %}selected{% endif %}>{{ department.department_name }}</option>
                         {% endfor %}
                     </select>
                 </form>
