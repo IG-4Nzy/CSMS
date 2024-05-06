@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
-            color: white;
+            color: black;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -96,7 +95,7 @@
         <form method="post" class="flex flex-col space-y-5 items-center justify-center text-center text-black">
             {% csrf_token %}
             <input class="text-center border-2 border-gray-300 rounded-lg w-80 px-4 py-2 focus:outline-none focus:border-blue-500" type="text" name="name" value="{{hod.user.first_name}}{{hod.user.last_name}}" placeholder="Name">
-            <input class="text-center border-2 border-slate-500 w-[20rem] py-2 px-4 rounded" 
+            <input class="text-center border-2 border-gray-300 w-[20rem] py-2 px-4 rounded  focus:outline-none focus:border-blue-500" 
                 type="date" 
                 name="date" 
                 id="dateInput" 

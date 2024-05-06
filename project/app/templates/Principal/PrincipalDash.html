@@ -10,8 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
-            color: white;
+            {% comment %} background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333); {% endcomment %}
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -53,10 +52,10 @@
        }
    </style>
 </head>
-<body>
+<body class="">
     <div class="navbar flex justify-between items-center h-14 ">
         <div class="mx-5 ">
-            <p class="text-white font-2xl font-bold ">CSMS</p>
+            <p class="font-2xl font-bold ">CSMS</p>
         </div>
         <div class="mx-5  ">
             <ul class="flex gap-5 ">
@@ -83,12 +82,12 @@
     </div>
 
     <div class="navs mx-5 flex justify-start items-start w-32   space-x-[30rem]">
-        <ul class="flex flex-col space-y-10 mt-10">
-            <a href="{% url 'PrincipalDash' %}"><li class="border-2 w-[7rem] text-center bg-gray-300 rounded-3xl">Dashboard</li></a>
-            <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  bg-gray-500 rounded-3xl">View Hod</li></a>
-            <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 bg-gray-500 rounded-3xl ">View Faculty</li></a>
-            <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 bg-gray-500 rounded-3xl ">View Students</li></a>
-            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 bg-gray-500 rounded-3xl ">LeaveLetters</li></a>
+        <ul class="flex flex-col space-y-10 mt-10 text-grey-200">
+            <a href="{% url 'PrincipalDash' %}"><li class="border-2 w-[7rem] text-center bg-gray-300 text-grey-200 rounded-3xl">Dashboard</li></a>
+            <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 text-grey-200  bg-gray-500 rounded-3xl">View Hod</li></a>
+            <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 text-grey-200 bg-gray-500 rounded-3xl ">View Faculty</li></a>
+            <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 text-grey-200 bg-gray-500 rounded-3xl ">View Students</li></a>
+            <a href="{% url 'PrincipalViewLeaveletters' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 text-grey-100 bg-gray-500 rounded-3xl ">LeaveLetters</li></a>
         </ul>
         <div class="totals flex justify-center ">
             <div class="flex flex-col w-32">

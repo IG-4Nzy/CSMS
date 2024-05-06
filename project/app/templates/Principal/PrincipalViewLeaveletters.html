@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
-            color: white;
+            color: black;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -76,7 +75,7 @@
         </a>
             
         <div>
-            <p>Name :  {{principal.user.usename}}</p><p>{{principal.user.last_name}}</p>
+            <p>Name :  {{principal.user.username}}</p><p>{{principal.user.last_name}}</p>
             {% comment %} <p>Date Of Join : {{principal.principal_Doj}}</p> {% endcomment %}
         </div>
     </div>
@@ -84,8 +83,8 @@
     
 <div class="flex">
     <div class="navs mx-5 mt-4 ">
-        <ul class="flex flex-col space-y-5">
-            <a href="{% url 'PrincipalDash' %}"><li class="border-2 w-[7rem] text-center ">Dashboard</li></a>
+        <ul class="flex flex-col space-y-5 ">
+            <a href="{% url 'PrincipalDash' %}"><li class="border-2 w-[7rem] text-center  ">Dashboard</li></a>
             <a href="{% url 'PrincipalViewHod' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  ">View Hod</li></a>
             <a href="{% url 'PrincipalViewFaculty' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Faculty</li></a>
             <a href="{% url 'PrincipalViewStudents' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200 ">View Students</li></a>

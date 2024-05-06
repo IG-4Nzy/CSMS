@@ -12,7 +12,7 @@
         }
 
         .bgLogin {
-            background-image: url('{% static "img/001.jpeg" %}');
+            {% comment %} background-image: url('{% static "img/001.jpeg" %}'); {% endcomment %}
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -34,24 +34,24 @@
         <div class="text-2xl font-bold mb-2 text-[#1e0e4b] text-center">Welcome back to <span
                 class="text-[#7747ff]">CSMS</span></div>
         <div class="text-sm font-normal mb-4 text-center text-[#1e0e4b]">Log in to your account</div>
-        <form class="flex flex-col gap-3" method="post">
+        <form class="flex flex-col gap-3 text-gray-800" method="post">
             {% csrf_token %}
             <div class="block relative">
                 <label for="username"
-                    class="block text-gray-200 cursor-text text-sm leading-[140%] font-normal mb-2">Username</label>
-                <input autocomplete="new-username" name="username" type="text" id="username" value=" "
-                    class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0">
+                    class="block text-gray-800 cursor-text text-sm leading-[140%] font-normal mb-2">Username</label>
+                <input autocomplete="new-username" name="username" type="text" id="username" value=""
+                    class="rounded border border-gray-800 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0">
 
 
 
                 <label for="password"
-                    class="block text-gray-200 cursor-text text-sm leading-[140%] font-normal mb-2">Password</label>
+                    class="block text-gray-800 cursor-text text-sm leading-[140%] font-normal mb-2">Password</label>
                 <div class="flex items-center">
                     <input autocomplete="off" name="password" type="password" id="password"
-                        class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0">
+                        class="rounded border border-gray-800 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0">
                     <!-- Button to toggle password visibility -->
                     <button type="button" id="togglePasswordVisibility"
-                        class="ml-2 text-sm text-gray-200 focus:outline-none" >Show</button>
+                        class="ml-2 text-sm text-gray-800 focus:outline-none" >Show</button>
                 </div>
             </div>
             <div class="flex">
@@ -60,9 +60,9 @@
             <a class="bg-[#7747ff] w-max m-auto px-6 py-2 rounded text-white text-sm font-normal" href="{% url 'home' %}">Home</a>
             </div>
         </form>
-        <div class="text-sm text-center mt-[1.6rem] text-gray-200">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
+        <div class="text-sm text-center mt-[1.6rem] text-gray-800">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
                 href="{% url 'StudentReg' %}">Register as a student</a></div>
-        <div class="text-sm text-center mt-[1.6rem] text-gray-200">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
+        <div class="text-sm text-center mt-[1.6rem] text-gray-800">Don’t have an account yet? <a class="text-sm text-[#7747ff]"
                 href="{% url 'ParentReg' %}">Register as a parent</a></div>
         <center>
             <p class="text-red-500">{{msg}}
@@ -72,7 +72,7 @@
 
     </div>
     <div class=" w-1/2 flex items-center content-center justify-center">
-        <img class="clg" src="{% static 'img/college.jpeg' %}">
+        <img class="clg" src="{% static 'img/kaimanam.jpg' %}">
     </div>
 </body>
 <script>

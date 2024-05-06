@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), linear-gradient(to right, #757575, #333333);
-            color: white;
+            color: black;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -18,7 +17,7 @@
         /* Import Constantia font */
         @font-face {
            font-family: 'Constantia';
-           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff'); /* Adjust the path and format as needed */
+           src: url('{% static 'F:\MajorProject\project\app\static\fonts\Constantia\Constantia.woff' %}') format('woff');
            font-weight: normal;
            font-style: normal;
        }
@@ -125,6 +124,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     {% for faculty in faculties %}
                     <tr>
+                        <td><img class="rounded-full w-[3rem] h-[3rem]" src="{{faculty.Faculty_Profile.url}}"></img></td>
                         <td class="px-4 py-3">{{ faculty }}</td>
                         <td class="px-4 py-3">
                             <form method="post" action="{% url 'update_role' %}" class="inline">
