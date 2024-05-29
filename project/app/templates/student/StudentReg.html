@@ -6,18 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Student</title>
     <style>
         body {
-
-            color: white;
+            background-color: rgba(255, 255, 255, 0.07);
+            overflow-x:hidden;
+            color: black;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
 
         .bgLogin {
-            background-image: url('{% static "img/001.jpeg" %}');
+            {% comment %} background-image: url('{% static "img/001.jpeg" %}'); {% endcomment %}
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -32,83 +33,94 @@
 
         .clg {
             width: 50rem;
-            height: 50rem;
+            height: 40rem;
+            border-radius:30px;
         }
     </style>
 </head>
 
 <body class="h-screen w-screen flex-col flex  bgLogin ">
-    <div class="text-xl mt-5 h-[0.2rem] px-5">Student Registration</div>
+   <center> <div class="text-xl mt-5 h-[0.2rem] px-5">Student Registration</div></center>
     <div class="h-screen w-screen  flex items-center justify-center content-center" >
     <div id="alertMsg" class="hidden fixed bottom-0 left-0 w-full bg-green-500 text-white py-3 text-center">
         Registered Successfully, Wait For the Faculty to Approved !
     </div>
     <div class="w-screen">
-        <form autocomplete="off" class="flex flex-col space-y-3 items-center content-center justify-center"
-      method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+    <form autocomplete="off" class="flex flex-col space-y-3 items-center content-center justify-center" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     {% csrf_token %}
     <div class="error"></div>
-    <div class="flex flex-col items-center justify-center space-y-2">
+    
+    <div class="flex flex-col items-center justify-center space-y-1">
         <p class="text-red-500 mt-3">{{msg}}</p>
-        <label for="firstname">First Name:</label>
-        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="text" name="firstname" id="firstname" placeholder="First name" required>
+        <div class="flex items-start flex-col w-[20rem]">
+            <label class="text-sm " for="firstname">First Name:</label>
+            <input class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="text" name="firstname" id="firstname" placeholder="First name" required>
+        </div>
+        <div class="flex items-start flex-col w-[20rem]">
+            <label class="text-sm " for="lastname">Last Name:</label>
+            <input class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="text" name="lastname" id="lastname" placeholder="Last name" required>
+        </div>
 
-        <label for="lastname">Last Name:</label>
-        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="text" name="lastname" id="lastname" placeholder="Last name" required>
+    <div class="flex items-start flex-col w-[20rem]">
+        <label class="text-sm " for="username">Username:</label>
+        <input autocomplete="off" class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="text" name="username" id="username" placeholder="Username" required>
+    </div>
 
-        <label for="username">Username:</label>
-        <input autocomplete="off"
-               class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="text" name="username" id="username" placeholder="Username" required>
+    <div class="flex items-start flex-col w-[20rem]">
+        <label class="text-sm " for="email">Email:</label>
+        <input class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="email" name="email" id="email" placeholder="Email" required>
+    </div>
 
-        <label for="email">Email:</label>
-        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="email" name="email" id="email" placeholder="Email" required>
+    <div class="flex items-start flex-col w-[20rem]">
+        <label class="text-sm " for="dob">Date Of Birth:</label>
+        <input class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
+    </div>
 
-        <label for="dob">Date Of Birth:</label>
-        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="date" name="dob" id="dob" placeholder="Date Of Birth" required>
-
-        <label for="department">Department:</label>
-        <select class="select text-black w-full border border-gray-300 rounded-md py-1 px-3"
-                name="department" id="department">
+    <div class="flex items-start flex-col w-[20rem]">
+        <label class="text-sm " for="department">Department:</label>
+        <select class="select text-black w-full border border-gray-800 rounded-md py-1 px-3" name="department" id="department">
             <option value="">Select Department</option>
             {% for department in departments %}
-            <option value="{{department.id}}">{{department.department_name}}</option>
+                <option value="{{department.id}}">{{department.department_name}}</option>
             {% endfor %}
         </select>
+    </div>
 
-        <label for="pnum">Phone Number:</label>
-        <input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="text" name="pnum" id="pnum" placeholder="Phone number" required>
+    <div class="flex items-start flex-col w-[20rem]">
+        <label class="text-sm " for="pnum">Phone Number:</label>
+        <input class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="text" name="pnum" id="pnum" placeholder="Phone number" required>
+    </div>
 
-        <label for="pass">Password:</label>
+    <div class="flex items-start flex-col w-[20rem]">
+        <label class="text-sm " for="pass">Password:</label>
         <div class="relative">
-    <input class="text-black flex text-center w-[30rem] border border-gray-300 rounded-md py-1 px-3 pr-8"
-           type="password" id="pass" name="pass" placeholder="Password" required><br>
-    <button class="absolute w-14 h-8 inset-y-0 right-0 flex items-center justify-center bg-gray-200 text-gray-800 py-1 px-2 rounded-md hover:bg-gray-300 focus:outline-none"
-            type="button" id="togglePassVisibility" onclick="togglePasswordVisibility()" >Show</button>
+        <input class="text-black flex text-center w-[20rem] border border-gray-800 rounded-md py-1 px-3 pr-8" type="password" id="pass" name="pass" placeholder="Password" required><br>
+        <button class="absolute w-12 mt-1 mr-2 h-6 inset-y-0 right-0 flex items-center justify-center bg-gray-800 text-gray-200 py-1 px-2 rounded-md hover:bg-gray-800 focus:outline-none" type="button" id="togglePassVisibility" onclick="togglePasswordVisibility()" >Show</button>
+    </div>
+
 </div>
 
-<label for="pass2">Confirm Password:</label>
-<input class="text-black flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-       type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
+<div class="flex items-start flex-col w-[20rem]">
+    <label for="pass2">Confirm Password:</label>
+    <input class="text-black flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="password" id="pass2" name="pass2" placeholder="Confirm password" required>
+</div>
 
+<div class="flex items-start flex-col w-[20rem]">
         <label for="profile">Profile Picture:</label>
-        <input class="text-white flex text-center w-full border border-gray-300 rounded-md py-1 px-3"
-               type="file" name="profile" id="profile" placeholder="Profile" required>
+        <input class="text-white flex text-center w-full border border-gray-800 rounded-md py-1 px-3" type="file" name="profile" id="profile" placeholder="Profile" required>
+</div>
 
-        <div class="flex justify-between gap-3 mt-5">
-            <input class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-20 text-black cursor-pointer"
-                   type="submit" value="Submit">
-            <a class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-20 text-black cursor-pointer"
-               href="{% url 'login' %}">Back</a>
-        </div>
-    </div>
+<div class="flex justify-between gap-5">
+    <input class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-20 text-black cursor-pointer" type="submit" value="Submit">
+    <a class="bg-green-500 rounded-3xl flex text-center justify-center items-center w-20 text-black cursor-pointer" href="{% url 'login' %}">Back</a>
+</div>
+
+</div>
+
 </form>
-    </div>
+
+</div>
 
     <div class="w-1/2 flex items-center justify-center content-center items-center p-5 mr-24 flex-col clg">
         <img class="clg" src="{% static 'img/student.jpeg' %}">
@@ -132,11 +144,11 @@
         if (passField.type === "password") {
             passField.type = "text";
             pass2Field.type = "text";
-            toggleButton.textContent = "Hide Password";
+            toggleButton.textContent = "Hide";
         } else {
             passField.type = "password";
             pass2Field.type = "password";
-            toggleButton.textContent = "Show Password";
+            toggleButton.textContent = "Show";
         }
     }
 
@@ -207,7 +219,7 @@
         alertDiv.classList.remove('hidden');
         setTimeout(function () {
             alertDiv.classList.add('hidden');
-        }, 3000);
+        }, 8000);
     }
 
     var urlParams = new URLSearchParams(window.location.search);

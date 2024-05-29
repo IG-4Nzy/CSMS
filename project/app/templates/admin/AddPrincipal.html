@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-           background-image: url("{% static 'img/001.jpeg' %}");
             background-repeat: no-repeat;
             background-size: cover;
+            background-color: rgba(255, 255, 255, 0.07);
+        }
+        .img{
+            width:50rem;
+            height:40rem;
         }
     </style>
 </head>
@@ -21,40 +25,40 @@
             {% if msg %}<div class="error flex items-center justiify-center text-center text-red-500 border-red-500 border-2 p-5 rounded-3xl " id="errorMsg">{{ msg }}</div>{% endif %}
             <div class="max-w-md mx-auto space-y-5">
         <div>
-            <label for="name" class="block text-gray-300">Name:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="text" name="name" id="name" placeholder="Name" required>
+            <label for="name" class="block text-gray-800">Name:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="text" name="name" id="name" placeholder="Name" required>
         </div>
         <div>
-            <label for="username" class="block text-gray-300">Username:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="text" name="username" id="username" placeholder="Username" required>
+            <label for="username" class="block text-gray-800">Username:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="text" name="username" id="username" placeholder="Username" required>
         </div>
         <div>
-            <label for="password" class="block text-gray-300">Password:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="password" name="password" id="password" placeholder="Password" required>
+            <label for="password" class="block text-gray-800">Password:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="password" name="password" id="password" placeholder="Password" required>
         </div>
         <div class="flex items-center">
             <input type="checkbox" id="showPassword" class="mr-2" >
-            <label for="showPassword" class="text-gray-300">Show Password</label>
+            <label for="showPassword" class="text-gray-800">Show Password</label>
         </div>
         <div>
-            <label for="cpassword" class="block text-gray-300">Confirm Password:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" required>
+            <label for="cpassword" class="block text-gray-800">Confirm Password:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" required>
         </div>
         <div>
-            <label for="email" class="block text-gray-300">Email:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="email" name="email" id="email" placeholder="Email" required>
+            <label for="email" class="block text-gray-800">Email:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="email" name="email" id="email" placeholder="Email" required>
         </div>
         <div>
-            <label for="principalDOB" class="block text-gray-300">Date of Birth:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="date" name="principalDOB" id="principalDOB" placeholder="Date of Birth" required>
+            <label for="principalDOB" class="block text-gray-800">Date of Birth:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="date" name="principalDOB" id="principalDOB" placeholder="Date of Birth" required>
         </div>
         <div>
-            <label for="principal_PhoneNUm" class="block text-gray-300">Phone Number:</label>
-            <input class="text-black w-full text-center border border-gray-300 rounded-md  px-4" type="text" name="principal_PhoneNUm" id="principal_PhoneNUm" placeholder="Phone Number" required>
+            <label for="principal_PhoneNUm" class="block text-gray-800">Phone Number:</label>
+            <input class="text-black w-full text-center border border-gray-800 rounded-md  px-4" type="text" name="principal_PhoneNUm" id="principal_PhoneNUm" placeholder="Phone Number" required>
         </div>
         <div>
-            <label for="principal_Profile" class="block text-gray-300">Profile Picture:</label>
-            <input class="text-white w-full text-center border border-gray-300 rounded-md  px-4" type="file" name="principal_Profile" id="principal_Profile" placeholder="Profile" required>
+            <label for="principal_Profile" class="block text-gray-800">Profile Picture:</label>
+            <input class="text-white w-full text-center border border-gray-800 rounded-md  px-4" type="file" name="principal_Profile" id="principal_Profile" placeholder="Profile" required>
         </div>
         <div class="flex justify-center items-center space-x-5">
            <div class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center w-[8rem] text-black h-[2rem]"> <input  type="submit" value="Submit"></div>
@@ -65,7 +69,7 @@
         </form>
     </div>
     <div class="w-1/2 flex items-center justify-center content-center items-center p-5 mr-24 flex-col">
-        <img class="w-full" src="{% static 'img/principal.jpg' %}">
+        <img class="w-full img" src="{% static 'img/principal.jpg' %}">
         
     </div>
    
