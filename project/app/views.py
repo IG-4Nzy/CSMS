@@ -4,20 +4,14 @@ from .models import *
 from datetime import date,datetime
 from django.utils import timezone
 from django.contrib.auth import logout
-from django.http import HttpResponse,HttpResponseServerError
-import calendar
+from django.http import HttpResponse,HttpResponseServerError,HttpResponseRedirect
 from django.urls import reverse
 from django.core.mail import send_mail
-from django.db.models import Q
+from django.db.models import Q,Count,F
 from django.contrib import messages
-from django.db.models import Subquery, OuterRef
-from django.db.models import Case, When, Value, CharField
 from django.db import transaction
 import re
-from django.http import HttpResponseRedirect
-from django.http import JsonResponse
-from django.db.models import Count
-from django.db.models import F
+
 
 
 
