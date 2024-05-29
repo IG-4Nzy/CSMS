@@ -181,7 +181,7 @@ class FacultyLeaveLetter(models.Model):
     leave_faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,null = True)
     reason = models.CharField(max_length = 500,null = True)
     date = models.CharField(max_length = 100,null = True)
-    isApproved = models.CharField(max_length = 100,null = True ,default = "False")
+    isApproved = models.CharField(max_length = 100,null = True ,default = "waiting")
 
 
 

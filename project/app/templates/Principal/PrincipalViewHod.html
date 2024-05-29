@@ -77,7 +77,7 @@
         </a>
             
         <div>
-            <p>Name :  {{principal.user.username}}</p><p>{{principal.user.last_name}}</p>
+            <p>Name :  {{principal.user.first_name}}</p><p>{{principal.user.last_name}}</p>
             {% comment %} <p>Date Of Join : {{principal.principal_Doj}}</p> {% endcomment %}
         </div>
     </div>
@@ -94,7 +94,7 @@
         </ul>
     </div>
     <div class="container mx-auto">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
             {% for hod_instance in hod %}
                 <div class="bg-white overflow-hidden shadow-md rounded-lg text-black">
                     <img src="{{ hod_instance.Hod_Profile.url }}" alt="{{ hod_instance.user.first_name }} Profile Picture" class="w-full h-90 object-cover object-center">

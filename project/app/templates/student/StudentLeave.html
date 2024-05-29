@@ -75,7 +75,7 @@
 
 
     <div class="navs mx-5 mt-10 flex space-x-[10rem]">
-        {{msg}}
+       
         <ul class="flex flex-col space-y-5">
             {% comment %} <a href="{% url 'studentDash' %}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200">Dashboard</li></a> {% endcomment %}
             <a href="{% url 'studentAttendance'%}"><li class="border-2 w-[7rem] text-center hover:bg-gray-300 transition ease-in duration-200  ">Attendance</li></a>
@@ -86,6 +86,7 @@
         </ul>
         <form method="post" class="flex flex-col space-y-5 items-center justify-center" onsubmit="return validateDate()">
             {% csrf_token %}
+             {{msg}}
             <input class="text-center border-2 border-gray-300 rounded-lg px-4 py-2 w-80" type="text" name="name" value="{{ student.user.first_name }}" placeholder="Name">
             <input class="text-center border-2 border-gray-300 rounded-lg px-4 py-2 w-80" type="date" id="date" name="date" placeholder="Date">
             <input class="text-center border-2 border-gray-300 rounded-lg px-4 py-2 w-80" type="text" name="nod" placeholder="Number Of Days">
@@ -93,15 +94,16 @@
             <input class="text-center bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 w-80" type="submit" name="submit" value="Submit">
         </form>
         {% if leaveLetter %}
+        <div class="flex flex-wrap w-[45rem] space-x-5">
         {% for leaveLetter in leaveLetter %}
-        <div class="flex flex-wrap gap-2 space-x-2">
-        <div class="">
+        
+        <div class="w-[15rem]  ">
             <div id="deletePopup" class="hidden bg-white border border-gray-300 shadow-md rounded-lg p-4 absolute z-10">
                 <p>Are you sure you want to delete this item?</p>
                 <button onclick="deleteItem({{ leaveLetter.id }})" class="bg-red-500 text-white px-4 py-2 mt-2">Confirm Delete</button>
                 <button onclick="hideDeletePopup()" class="bg-gray-300 text-gray-700 px-4 py-2 mt-2">Cancel</button>
             </div>
-            <div class="bg-white shadow-md rounded-lg ">
+            <div class="bg-white shadow-md rounded-lg  h-[15rem]">
                 <div class="p-6">
                     <p class="text-lg font-semibold mb-2">Student Information</p>
                     <p><span class="font-semibold">Name:</span> {{ leaveLetter.leave_Student.user.first_name }}</p>
@@ -109,7 +111,7 @@
                     <p><span class="font-semibold">Admission Number:</span> {{ leaveLetter.leave_Student.AdmissionNo }}</p>
                     <p><span class="font-semibold">Date :</span> {{ leaveLetter.date }}</p>
                 </div>
-                <div class="px-6 py-4 bg-gray-100">
+                <div class="h-[8rem] px-6 py-4 bg-gray-100">
                     <p class="text-lg font-semibold mb-2">Leave Submission Status</p>
                     <p>
                         {% if leaveLetter.isApproved == 'True' %}
@@ -143,8 +145,9 @@
                 </div>
             </div>
         </div>
-    </div>
         {% endfor %}
+    </div>
+        
         {% endif %}
         <script>
             function validateDate() {

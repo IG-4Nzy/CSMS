@@ -120,7 +120,7 @@ def AddPrincipal(request):
             return render(request, 'admin/AddPrincipal.html', context)
         
         principal_Doj = date.today()
-        user = User.objects.create_user(username=username, password=password, email=email)
+        user = User.objects.create_user(username=username,first_name = name, password=password, email=email)
         principal = Principal.objects.create(user=user, principal_Dob=principal_Dob, principal_Doj=principal_Doj,
                                              principal_PhoneNUm=principal_PhoneNUm, principal_Profile=principal_Profile)
         return redirect(adminpage)
@@ -870,8 +870,8 @@ def HodAddFaculty(request):
     return render(request, 'hod/HodAddUser.html', context)
 def HodViewLeaveletters(request):
     hod = Hod.objects.get(user=request.user)
-    hod_leave_letters = FacultyLeaveLetter.objects.filter(leave_Hod__Hod_Department=hod.Hod_Department, isApproved=False)
-    std_leave_letters = StudentLeaveLetter.objects.filter(leave_Student__Student_Department=hod.Hod_Department, isApprovedFaculty=True ,isApproved=False)
+    hod_leave_letters = FacultyLeaveLetter.objects.filter(leave_Hod__Hod_Department=hod.Hod_Department)
+    std_leave_letters = StudentLeaveLetter.objects.filter(leave_Student__Student_Department=hod.Hod_Department, isApprovedFaculty=True)
     print(hod_leave_letters)
     print(std_leave_letters)
 
@@ -886,7 +886,7 @@ def approve_reject_leaveHodFaculty(request, leave_id):
         status = request.POST.get('status')
         leave_letter = FacultyLeaveLetter.objects.get(id=leave_id)
         if status == "approve":
-            leave_letter.isApproved = True
+            leave_letter.isApproved = 'True'
             leave_letter.save()
 
             # Send email to faculty
@@ -900,9 +900,8 @@ def approve_reject_leaveHodFaculty(request, leave_id):
             faculty_email = faculty.user.email
 
             send_mail(subject, message, 'sampleproject2211@gmail.com', [faculty_email], fail_silently=False)
-            leave_letter.delete()
         elif status == "reject":
-            leave_letter.isApprovedFaculty = False
+            leave_letter.isApprovedFaculty = 'False'
             leave_letter.save()
 
             hod = Hod.objects.get(user=request.user)
@@ -915,7 +914,6 @@ def approve_reject_leaveHodFaculty(request, leave_id):
             faculty_email = faculty.user.email
 
             send_mail(subject, message, 'sampleproject2211@gmail.com', [faculty_email], fail_silently=False)
-            leave_letter.delete()
 
     return redirect('HodViewLeaveletters')
 def approve_reject_leaveHodStudent(request, leave_id):
@@ -1036,7 +1034,7 @@ def facultyAttendance(request):
 
     start_semester = (int(selected_class) - 1) * 2 + 1
     end_semester = start_semester + 1
-    students = Student.objects.filter(Student_Department=faculty.Faculty_Department, Sem__in=range(start_semester, end_semester + 1))
+    students = Student.objects.filter(Student_Department=faculty.Faculty_Department, Sem__in=range(start_semester, end_semester + 1),Is_Active = 'True')
     attendance_records = StudentAttendance.objects.filter(student__in=students)
 
     context = {
@@ -1130,9 +1128,8 @@ def FacultyViewAttendance(request):
     selected_class = request.GET.get('selected_class', "0")
     start_semester = (int(selected_class) - 1) * 2 + 1
     end_semester = start_semester + 1
-    attendance_data =  StudentAttendance.objects.filter(student__Sem__in=range(start_semester, end_semester + 1)
-    )
-    students = Student.objects.filter(Sem__in=range(start_semester, end_semester + 1))
+    attendance_data =  StudentAttendance.objects.filter(student__Sem__in=range(start_semester, end_semester + 1),student__Is_Active = 'True')
+    students = Student.objects.filter(Sem__in=range(start_semester, end_semester + 1),Is_Active = 'True')
     current_month = datetime.now().month
     dates = StudentAttendance.objects.filter(month=current_month).values_list('date', flat=True).distinct()
     attendance_data_list = []
@@ -1236,7 +1233,7 @@ def FacultyInternal(request):
             selected_class = '1'
 
         Sem = Semesters.objects.get(pk=selected_class)
-        students  = Student.objects.filter(Sem=Sem)
+        students  = Student.objects.filter(Sem=Sem,Is_Active='True')
         # Filter subjects based on the selected semester
         faculty_subjects = FacultySubject.objects.filter(faculty=faculty, sem=Sem)
 
@@ -1316,6 +1313,7 @@ def FacultyLeave(request):
             leave_faculty=faculty,
             reason=reason,
             date=date
+
         )
         subject = f"Leave Request from {name}"
         message = f"Dear {hod.user.first_name},\n\n{name} has requested leave on {date} for the following reason:\n\n{reason}"
@@ -1326,8 +1324,17 @@ def FacultyLeave(request):
         return redirect('FacultyLeave') 
 
     faculty = get_object_or_404(Faculty, user=request.user)
+
+    try:
+        leaveLetter = FacultyLeaveLetter.objects.filter(leave_faculty=faculty)
+        # Proceed with handling the leave letter object
+        # For example, you can access leaveLetter.leave_date, leaveLetter.reason, etc.
+    except FacultyLeaveLetter.DoesNotExist:
+        pass
+
     context = {
-        'faculty': faculty
+        'faculty': faculty,
+        'leaveLetter': leaveLetter,
     }
     return render(request, 'faculty/FacultyLeave.html', context)
 def FacultyViewLeaveletters(request):
@@ -1821,7 +1828,7 @@ def studentLeave(request):
             try:
                 parent = Parent.objects.get(stdParent=student)
             except:
-                return render(request,'student/StudentLeave.html',{'msg':'Parent Doesnt Exists'})
+                return render(request,'student/StudentLeave.html',{'msg':'Parent Doesnt Exists','student':student})
             faculty = Faculty.objects.get(Faculty_Department=student.Student_Department,role=tutor)
 
             leave_letter = StudentLeaveLetter.objects.create(
@@ -1837,6 +1844,7 @@ def studentLeave(request):
             message = '{} send a leave request for {}'.format(student.user.first_name, leave_letter.date)
             parent_email = parent.user.email
             send_mail(subject, message, 'sampleproject2211@gmail.com', [parent_email], fail_silently=False)
+
         # Initialize leaveLetter to None
 
             try:
@@ -1934,7 +1942,7 @@ def ParentReg(request):
         Parent.objects.create(user=user, Parent_Name=Parent_Name, Parent_num=Parent_PhoneNUm,
                                Parent_Profile=Parent_Profile, stdParent=stud , AdmissionNo=admNo)
 
-        return HttpResponseRedirect(reverse('StudentReg') + '?success=1')
+        return HttpResponseRedirect(reverse('ParentReg') + '?success=1')
 
     return render(request, 'parent/ParentReg.html', context)
 def ParentDash(request):

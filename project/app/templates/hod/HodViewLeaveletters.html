@@ -126,7 +126,7 @@
         <img class="rounded-full w-[4rem] h-[4rem] border-red-500 border-2 " src="{{hod.Hod_Profile.url}}" alt="profile" >
         
         <div >
-            <p>Name : {{hod.user.first_name}}</p>
+            <p>Name : {{hod.user.first_name}} {{hod.user.last_name}}</p>
             <p>Designation : {{hod.Hod_Designation}}</p>
             {% comment %} <p>Date Of Join : {{hod.Hod_Doj}}</p> {% endcomment %}
         </div>
@@ -159,12 +159,13 @@
                     <p><span class="font-semibold">Date:</span> {{ leave_letter.date }}</p>
                 </div>
                 <!-- Student Information -->
-                <div>
+                <div class="w-[20rem]">
                     <h3 class="text-lg font-semibold">Faculty Information</h3>
                     <p><span class="font-semibold">Name:</span> {{ leave_letter.leave_faculty.user.first_name }} {{ leave_letter.leave_faculty.user.last_name }}</p>
                     <p><span class="font-semibold">Department:</span> {{ leave_letter.leave_faculty.Faculty_Department }}</p>
                 </div>
                 <!-- Buttons for Reject and Approve -->
+                 {% if leave_letter.isApproved == 'waiting' %}
                 <div class="flex justify-end space-x-4">
                     <form action="{% url 'approve_reject_leaveHodFaculty' leave_letter.id %}" method="post">
                         {% csrf_token %}
@@ -175,6 +176,11 @@
                         <button type="submit" name="status" value="reject" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Reject</button>
                     </form>
                 </div>
+                {% elif leave_letter.isApproved == 'False' %}
+                <p class="bg-red-500 rounded-3xl w-[5rem] h-[2rem] flex text-center justify-center items-center text-white ">Rejected</p>
+                {% else %}
+                <p class="bg-green-500 rounded-3xl w-[5rem] h-[2rem] flex text-center justify-center items-center text-white ">Accepted</p>
+                {% endif %}
             </div>
             {% endfor %}
             {% for leave_letter in std_leave_letters %}
@@ -194,6 +200,7 @@
                     <p><span class="font-semibold">Department:</span> {{ leave_letter.leave_faculty.Faculty_Department }}</p>
                 </div>
                 <!-- Buttons for Reject and Approve -->
+                {% if leave_letter.isApproved == 'waiting' %}
                 <div class="flex justify-end space-x-4">
                     <form action="{% url 'approve_reject_leaveHodStudent' leave_letter.id %}" method="post">
                         {% csrf_token %}
@@ -204,6 +211,11 @@
                         <button type="submit" name="status" value="reject" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Reject</button>
                     </form>
                 </div>
+                {% elif leave_letter.isApproved == 'False' %}
+                <p>Rejected</p>
+                {% else %}
+                <p>Accepted</p>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

@@ -8,9 +8,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-             background-image: url("{% static 'img/001.jpeg' %}");
+
             background-repeat: no-repeat;
             background-size: cover;
+            background-color: rgba(255, 255, 255, 0.07);
+        }
+        .img{
+            width:50rem;
+            height:40rem;
         }
     </style>
 
@@ -23,38 +28,38 @@
        
       <div class="flex w-full items-center justify-center content-center h-screen space-x-10">
     <div class="flex flex-col">
-        <form method="post" enctype="multipart/form-data" class="rounded-3xl flex flex-col w-[30rem] text-center space-y-2 border-2 border-gray-200 p-2 " onsubmit="return validateForm()">
+        <form method="post" enctype="multipart/form-data" class="rounded-3xl flex flex-col w-[30rem] text-center space-y-2 border-2 border-gray-600 p-2 " onsubmit="return validateForm()">
             {% csrf_token %}
             {% if msg %}
                 <div class="error bg-red-500 text-white px-4 py-2 rounded" id="errorMsg">{{ msg }}</div>
             {% endif %}
             <div>
-                <label for="firstname" class="block text-gray-200">First Name:</label>
-                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="Enter your first name" required>
+                <label for="firstname" class="block text-gray-600">First Name:</label>
+                <input class="text-black border border-gray-800 rounded-md  px-4 block w-full" type="text" name="firstname" id="firstname" placeholder="Enter your first name" required>
             </div>
             <div>
-                <label for="lastname" class="block text-gray-200">Last Name:</label>
-                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="lastname" id="lastname" placeholder="Enter your last name" required>
+                <label for="lastname" class="block text-gray-600">Last Name:</label>
+                <input class="text-black border border-gray-800 rounded-md  px-4 block w-full" type="text" name="lastname" id="lastname" placeholder="Enter your last name" required>
             </div>
             <div>
-                <label for="username" class="block text-gray-200">Username:</label>
-                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="username" id="username" placeholder="Enter your username" required>
+                <label for="username" class="block text-gray-600">Username:</label>
+                <input class="text-black border border-gray-800 rounded-md  px-4 block w-full" type="text" name="username" id="username" placeholder="Enter your username" required>
             </div>
             <div>
-                <label for="email" class="block text-gray-200">Email:</label>
-                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="email" name="email" id="email" placeholder="Enter your email" required>
+                <label for="email" class="block text-gray-600">Email:</label>
+                <input class="text-black border border-gray-800 rounded-md  px-4 block w-full" type="email" name="email" id="email" placeholder="Enter your email" required>
             </div>
             <div>
-                <label for="dob" class="block text-gray-200">Date of Birth:</label>
-                <input class="text-black border border-gray-300 rounded-md py-2 px-4 block w-full" type="date" name="dob" id="dob" required>
+                <label for="dob" class="block text-gray-600">Date of Birth:</label>
+                <input class="text-black border border-gray-800 rounded-md py-2 px-4 block w-full" type="date" name="dob" id="dob" required>
             </div>
             <div>
-                <label for="designation" class="block text-gray-200">Designation:</label>
-                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="text" name="designation" id="designation" placeholder="Enter your designation" required>
+                <label for="designation" class="block text-gray-600">Designation:</label>
+                <input class="text-black border border-gray-800 rounded-md  px-4 block w-full" type="text" name="designation" id="designation" placeholder="Enter your designation" required>
             </div>
             <div>
-                <label for="department" class="block text-gray-200">Department:</label>
-                <select class="text-black border border-gray-300 rounded-md  px-4 block w-full" name="department" id="department" required>
+                <label for="department" class="block text-gray-600">Department:</label>
+                <select class="text-black border border-gray-800 rounded-md  px-4 block w-full" name="department" id="department" required>
                     <option value="">Select Department</option>
                     {% for department in departments %}
                         <option value="{{department.id}}">{{department.department_name}}</option>
@@ -62,25 +67,25 @@
                 </select>
             </div>
             <div>
-                <label for="pnum" class="block text-gray-200">Phone Number:</label>
-                <input class="text-black border border-gray-300 rounded-md  px-4 block w-full" type="tel" name="pnum" id="pnum" placeholder="Enter your phone number" required>
+                <label for="pnum" class="block text-gray-600">Phone Number:</label>
+                <input class="text-black border border-gray-800 rounded-md  px-4 block w-full" type="tel" name="pnum" id="pnum" placeholder="Enter your phone number" required>
             </div>
             <div>
-                <label for="pass" class="block text-gray-200">Password:</label>
+                <label for="pass" class="block text-gray-600">Password:</label>
                 <div class="relative">
-                    <input class="flex text-center text-black border border-gray-300 rounded-md  px-4 block w-full pr-12" type="password" id="pass" name="pass" placeholder="Enter your password" required>
-                    <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-300 bg-gray-600 border border-gray-300 rounded-l-none rounded-md" onclick="togglePasswordVisibility()" type="button" id="togglePassVisibility">
+                    <input class="flex text-center text-black border border-gray-800 rounded-md  px-4 block w-full pr-12" type="password" id="pass" name="pass" placeholder="Enter your password" required>
+                    <button class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-800 bg-gray-600 border border-gray-800 rounded-l-none rounded-md" onclick="togglePasswordVisibility()" type="button" id="togglePassVisibility">
                         Show Pass
                     </button>
                 </div>
             </div>
             <div>
-                <label for="pass2" class="block text-gray-200">Confirm Password:</label>
-                <input class="flex text-center text-black border border-gray-300 rounded-md  px-4 block w-full" type="password" id="pass2" name="pass2" placeholder="Confirm your password" required>
+                <label for="pass2" class="block text-gray-600">Confirm Password:</label>
+                <input class="flex text-center text-black border border-gray-800 rounded-md  px-4 block w-full" type="password" id="pass2" name="pass2" placeholder="Confirm your password" required>
             </div>
             <div>
-                <label for="profile" class="block text-gray-200">Profile Picture:</label>
-                <input class="text-white border border-gray-300 rounded-md  px-4 block w-full" type="file" name="profile" id="profile" required>
+                <label for="profile" class="block text-gray-600">Profile Picture:</label>
+                <input class="text-white border border-gray-800 rounded-md  px-4 block w-full" type="file" name="profile" id="profile" required>
             </div>
             <div>
                 <input class="bg-green-500 rounded-3xl flex text-center justify-center content-center items-center   block w-full text-black " type="submit" value="Submit">
@@ -94,7 +99,7 @@
         <div id="alertMsg" class="h-[10rem] hidden rounded-3xl w-full mb-10 bg-green-500 text-white text-center flex items-center justify-center">
             User added successfully!
         </div>
-        <img class="w-[80rem]" src="{% static "img/kaimanam.jpg" %}">
+        <img class="w-[80rem] img" src="{% static "img/cpt.jpg" %}">
     </div>
 </div>
 
@@ -188,7 +193,7 @@
         alertDiv.classList.remove('hidden');
         setTimeout(function() {
             alertDiv.classList.add('hidden');
-        }, 3000); // Hide the message after 3 seconds (3000 milliseconds)
+        }, 8000); // Hide the message after 3 seconds (8000 milliseconds)
     }
 
     // Check for success message in the URL query parameters
