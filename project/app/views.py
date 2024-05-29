@@ -95,6 +95,8 @@ def AddPrincipal(request):
         principal_PhoneNUm = request.POST.get('principal_PhoneNUm')
         principal_Profile = request.FILES.get('principal_Profile')
 
+        name = name.upper()
+
         if password != password2:
             context = {'msg': 'Passwords do not match'}
             return render(request, 'admin/AddPrincipal.html', context)
@@ -401,6 +403,9 @@ def PrincipalAddHod(request):
         Hod_Department = request.POST.get('Department')
         Hod_PhoneNUm = request.POST.get('pnum')
         Hod_Profile = request.FILES.get('profile')
+
+        firstname = firstname.upper()
+        lastname = lastname.upper()
 
         submittedData = {
             'firstname':firstname,
@@ -835,6 +840,9 @@ def HodAddFaculty(request):
         Faculty_Department = hod.Hod_Department
         Faculty_PhoneNUm = request.POST.get('pnum')
         Faculty_Profile = request.FILES.get('profile')
+
+        firstname = firstname.upper()
+        lastname = lastname.upper()
 
         # Validate password for special character and number
         if not re.match(r'^(?=.*\d)(?=.*[!@#$%^&*()-_=+{};:,<.>])(?=.*[a-zA-Z])\S{8,}$', password):
@@ -1627,6 +1635,10 @@ def StudentReg(request):
         Student_PhoneNUm = request.POST.get('pnum')
         Student_Profile = request.FILES.get('profile')
 
+
+        firstname = firstname.upper()
+        lastname = lastname.upper()
+
         dob_str = Student_Dob
 
 # Parse the input string into a datetime object
@@ -1901,6 +1913,9 @@ def ParentReg(request):
         email = request.POST.get('email')
         Parent_PhoneNUm = request.POST.get('pnum')
         Parent_Profile = request.FILES.get('profile')
+
+        firstname = firstname.upper()
+        lastname = lastname.upper()
 
         if password != password2:
             context['msg'] = 'Password does not match'
